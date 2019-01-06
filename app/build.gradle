@@ -15,6 +15,10 @@ android {
         resConfigs "en"
     }
 
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -33,6 +37,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 dependencies {
     implementation libraries.appCompat
     implementation libraries.constraintLayout
+
+    implementation libraries.exoplayer
+    implementation libraries.exoplayerUi
 
     implementation libraries.kotlin
 }
