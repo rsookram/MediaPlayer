@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion sdkVersion.target
+
+    defaultConfig {
+        applicationId 'io.github.rsookram.mediaplayer'
+        minSdkVersion sdkVersion.min
+        targetSdkVersion sdkVersion.target
+        versionCode 1
+        versionName "1.0"
+
+        resConfigs "en"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    packagingOptions {
+        exclude "/kotlin/**"
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.allWarningsAsErrors = true
+}
+
+dependencies {
+    implementation libraries.appCompat
+    implementation libraries.constraintLayout
+
+    implementation libraries.kotlin
+}
