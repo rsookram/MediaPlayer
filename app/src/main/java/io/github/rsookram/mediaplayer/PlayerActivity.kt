@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.activity_player.*
+import kotlinx.android.synthetic.main.exo_player_control_view.*
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -32,6 +34,13 @@ class PlayerActivity : AppCompatActivity() {
             setFastForwardIncrementMs(10_000)
         }
         player_view.player = player
+
+        decrease_speed.setOnClickListener {
+            player.playbackParameters = PlaybackParameters(player.playbackParameters.speed - 0.1F)
+        }
+        increase_speed.setOnClickListener {
+            player.playbackParameters = PlaybackParameters(player.playbackParameters.speed + 0.1F)
+        }
 
         val userAgent = Util.getUserAgent(this, getString(R.string.app_name))
         val dataSourceFactory = DefaultDataSourceFactory(this, userAgent)
