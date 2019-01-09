@@ -33,10 +33,6 @@ class PlayerActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_player)
 
-        player_view.apply {
-            setRewindIncrementMs(10_000)
-            setFastForwardIncrementMs(10_000)
-        }
         player_view.player = player
 
         decrease_speed.setOnClickListener {
