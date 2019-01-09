@@ -38,6 +38,8 @@ dependencies {
     implementation libraries.appCompat
     implementation libraries.constraintLayout
 
+    implementation libraries.ktxCore
+
     implementation libraries.exoplayer
     implementation libraries.exoplayerUi
 

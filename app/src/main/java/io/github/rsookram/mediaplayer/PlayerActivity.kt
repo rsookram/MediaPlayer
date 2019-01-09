@@ -1,8 +1,12 @@
 package io.github.rsookram.mediaplayer
 
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.doOnPreDraw
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -41,6 +45,60 @@ class PlayerActivity : AppCompatActivity() {
         increase_speed.setOnClickListener {
             player.playbackParameters = PlaybackParameters(player.playbackParameters.speed + 0.1F)
         }
+
+        val sideGestureAreaWidth = resources.getDimension(R.dimen.side_gesture_area_width)
+
+        // Start with the controls hidden
+        player_view.showController()
+        controls_bar.doOnPreDraw {
+            controls_bar.y = player_view.height.toFloat()
+        }
+
+        val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+
+            override fun onDown(e: MotionEvent): Boolean = true
+
+            override fun onScroll(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean {
+                // Scrolling controls the position of the controls bar
+                val newY = controls_bar.y - distanceY
+                val playerHeight = player_view.height.toFloat()
+                val barHeight = controls_bar.height.toFloat()
+                controls_bar.y = newY.coerceIn(playerHeight - barHeight, playerHeight)
+
+                return true
+            }
+
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                val x = e.x
+
+                when {
+                    // Tapping on the left rewinds the media
+                    x < sideGestureAreaWidth -> {
+                        player.seekTo((player.currentPosition - 10_000).coerceAtLeast(0))
+                    }
+                    // Tapping on the right fast forwards the media
+                    x > gesture_area.width - sideGestureAreaWidth -> {
+                        val durationMs = player.duration
+                        val desired = player.currentPosition + 10_000
+                        player.seekTo(
+                            if (durationMs != C.TIME_UNSET) minOf(durationMs, desired) else desired
+                        )
+                    }
+                    // Tapping in the middle toggles the play/pause state
+                    else -> {
+                        player.playWhenReady = !player.playWhenReady
+                    }
+                }
+
+                return true
+            }
+        })
+        gesture_area.setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
 
         val userAgent = Util.getUserAgent(this, getString(R.string.app_name))
         val dataSourceFactory = DefaultDataSourceFactory(this, userAgent)
