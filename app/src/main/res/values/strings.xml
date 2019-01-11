@@ -1,3 +1,7 @@
 <resources>
+
     <string name="app_name">MediaPlayer</string>
+
+    <string name="playback_speed_multiplier">%s x</string>
+
 </resources>

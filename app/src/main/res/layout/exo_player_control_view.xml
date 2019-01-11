@@ -56,6 +56,15 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/playback_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            tools:text="1.5 x"
+            android:textColor="?android:textColorSecondary"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
             android:id="@id/exo_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

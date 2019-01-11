@@ -35,12 +35,8 @@ class PlayerActivity : AppCompatActivity() {
 
         player_view.player = player
 
-        decrease_speed.setOnClickListener {
-            player.playbackParameters = PlaybackParameters(player.playbackParameters.speed - 0.1F)
-        }
-        increase_speed.setOnClickListener {
-            player.playbackParameters = PlaybackParameters(player.playbackParameters.speed + 0.1F)
-        }
+        decrease_speed.setOnClickListener { adjustPlaybackSpeed(by = -0.1F) }
+        increase_speed.setOnClickListener { adjustPlaybackSpeed(by = +0.1F) }
 
         val sideGestureAreaWidth = resources.getDimension(R.dimen.side_gesture_area_width)
 
@@ -104,6 +100,14 @@ class PlayerActivity : AppCompatActivity() {
 
         player.prepare(mediaSource)
         player.playWhenReady = true
+    }
+
+    private fun adjustPlaybackSpeed(by: Float) {
+        val newSpeed = player.playbackParameters.speed + by
+        player.playbackParameters = PlaybackParameters(newSpeed)
+
+        val formattedSpeed = String.format("%.1f", newSpeed)
+        playback_speed.text = getString(R.string.playback_speed_multiplier, formattedSpeed)
     }
 
     override fun onDestroy() {
