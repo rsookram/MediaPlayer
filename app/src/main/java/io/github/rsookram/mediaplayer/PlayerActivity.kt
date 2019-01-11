@@ -92,6 +92,10 @@ class PlayerActivity : AppCompatActivity() {
         })
         gesture_area.setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
 
+        // Prevent touches on the controls bar from going through to the
+        // gesture area
+        controls_bar.setOnClickListener {}
+
         val userAgent = Util.getUserAgent(this, getString(R.string.app_name))
         val dataSourceFactory = DefaultDataSourceFactory(this, userAgent)
         val mediaSourceFactory = ExtractorMediaSource.Factory(dataSourceFactory)
