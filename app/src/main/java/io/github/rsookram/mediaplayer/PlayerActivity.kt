@@ -19,6 +19,8 @@ class PlayerActivity : AppCompatActivity() {
 
     private val player by lazy { ExoPlayerFactory.newSimpleInstance(this) }
 
+    private var playbackSpeed = 1.0F
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -129,10 +131,10 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun adjustPlaybackSpeed(by: Float) {
-        val newSpeed = player.playbackParameters.speed + by
-        player.playbackParameters = PlaybackParameters(newSpeed)
+        playbackSpeed += by
+        player.playbackParameters = PlaybackParameters(playbackSpeed)
 
-        val formattedSpeed = String.format("%.1f", newSpeed)
+        val formattedSpeed = String.format("%.1f", playbackSpeed)
         playback_speed.text = getString(R.string.playback_speed_multiplier, formattedSpeed)
     }
 
