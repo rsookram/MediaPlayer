@@ -58,9 +58,12 @@ class PlayerActivity : AppCompatActivity() {
             ): Boolean {
                 // Scrolling controls the position of the controls bar
                 val newY = controls_bar.y - distanceY
-                val playerHeight = player_view.height.toFloat()
                 val barHeight = controls_bar.height.toFloat()
-                controls_bar.y = newY.coerceIn(playerHeight - barHeight, playerHeight)
+
+                val closedPosition = player_view.height.toFloat()
+                val openPosition = closedPosition - barHeight
+
+                controls_bar.y = newY.coerceIn(openPosition, closedPosition)
 
                 return true
             }
@@ -90,7 +93,26 @@ class PlayerActivity : AppCompatActivity() {
                 return true
             }
         })
-        gesture_area.setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
+
+        gesture_area.setOnTouchListener { _, event ->
+            val result = gestureDetector.onTouchEvent(event)
+
+            // When gesture finishes, ensure that the controls settle at a
+            // terminal position
+            if (event.action == MotionEvent.ACTION_UP) {
+                val closedPosition = player_view.height.toFloat()
+                val openPosition = closedPosition - controls_bar.height.toFloat()
+
+                val halfwayPoint = openPosition + ((closedPosition - openPosition) / 2)
+                if (controls_bar.y > halfwayPoint) {
+                    controls_bar.animate().y(closedPosition)
+                } else {
+                    controls_bar.animate().y(openPosition)
+                }
+            }
+
+            result
+        }
 
         // Prevent touches on the controls bar from going through to the
         // gesture area
