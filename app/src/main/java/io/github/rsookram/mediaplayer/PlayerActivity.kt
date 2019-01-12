@@ -9,6 +9,7 @@ import androidx.core.view.doOnPreDraw
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -119,6 +120,14 @@ class PlayerActivity : AppCompatActivity() {
         // Prevent touches on the controls bar from going through to the
         // gesture area
         controls_bar.setOnClickListener {}
+
+        // Show a play indicator when paused
+        player.addListener(object : Player.EventListener {
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                val visibility = if (playWhenReady) View.GONE else View.VISIBLE
+                play_indicator.visibility = visibility
+            }
+        })
 
         val userAgent = Util.getUserAgent(this, getString(R.string.app_name))
         val dataSourceFactory = DefaultDataSourceFactory(this, userAgent)

@@ -11,6 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ImageView
+        android:id="@+id/play_indicator"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:background="@drawable/circle_play_background"
+        android:visibility="gone"
+        style="@style/ExoMediaButton.Play"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/controls_bar"
         android:layout_width="match_parent"
