@@ -22,8 +22,8 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val parser = IntentParser()
-        val video = parser.parse(intent)
-        if (video == null) {
+        val playbackRequest = parser.parse(intent)
+        if (playbackRequest == null) {
             finish()
             return
         }
@@ -57,11 +57,12 @@ class PlayerActivity : AppCompatActivity() {
             }
         })
 
-        val userAgent = Util.getUserAgent(this, getString(R.string.app_name))
+        val appName = getString(R.string.app_name)
+        val userAgent = playbackRequest.userAgent ?: Util.getUserAgent(this, appName)
         val dataSourceFactory = DefaultDataSourceFactory(this, userAgent)
         val mediaSourceFactory = ExtractorMediaSource.Factory(dataSourceFactory)
 
-        val mediaSource = mediaSourceFactory.createMediaSource(video.uri)
+        val mediaSource = mediaSourceFactory.createMediaSource(playbackRequest.uri)
 
         player.prepare(mediaSource)
         player.playWhenReady = true
