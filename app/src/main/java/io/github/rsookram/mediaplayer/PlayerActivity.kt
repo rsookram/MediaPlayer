@@ -1,11 +1,9 @@
 package io.github.rsookram.mediaplayer
 
 import android.os.Bundle
-import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.doOnPreDraw
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
@@ -13,8 +11,6 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import kotlinx.android.synthetic.main.activity_player.*
-import kotlinx.android.synthetic.main.exo_player_control_view.*
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -34,98 +30,30 @@ class PlayerActivity : AppCompatActivity() {
 
         enableImmersiveMode()
 
-        setContentView(R.layout.activity_player)
+        val container = findViewById<ViewGroup>(android.R.id.content)
+        val view = PlayerView(container, player)
 
-        player_view.player = player
-
-        decrease_speed.setOnClickListener { adjustPlaybackSpeed(by = -0.1F) }
-        increase_speed.setOnClickListener { adjustPlaybackSpeed(by = +0.1F) }
-
-        val sideGestureAreaWidth = resources.getDimension(R.dimen.side_gesture_area_width)
-
-        // Start with the controls hidden
-        player_view.showController()
-        controls_bar.doOnPreDraw {
-            controls_bar.y = player_view.height.toFloat()
+        view.onEvent = { event ->
+            when (event) {
+                Event.DecreaseSpeed -> adjustPlaybackSpeed(view, -0.1F)
+                Event.IncreaseSpeed -> adjustPlaybackSpeed(view, +0.1F)
+                Event.Rewind -> {
+                    player.seekTo((player.currentPosition - 10_000).coerceAtLeast(0))
+                }
+                Event.FastForward -> {
+                    val durationMs = player.duration
+                    val desired = player.currentPosition + 10_000
+                    player.seekTo(
+                        if (durationMs != C.TIME_UNSET) minOf(durationMs, desired) else desired
+                    )
+                }
+                Event.TogglePlayPause -> player.playWhenReady = !player.playWhenReady
+            }
         }
 
-        val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
-
-            override fun onDown(e: MotionEvent): Boolean = true
-
-            override fun onScroll(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                distanceX: Float,
-                distanceY: Float
-            ): Boolean {
-                // Scrolling controls the position of the controls bar
-                val newY = controls_bar.y - distanceY
-                val barHeight = controls_bar.height.toFloat()
-
-                val closedPosition = player_view.height.toFloat()
-                val openPosition = closedPosition - barHeight
-
-                controls_bar.y = newY.coerceIn(openPosition, closedPosition)
-
-                return true
-            }
-
-            override fun onDoubleTap(e: MotionEvent): Boolean {
-                val x = e.x
-
-                when {
-                    // Tapping on the left rewinds the media
-                    x < sideGestureAreaWidth -> {
-                        player.seekTo((player.currentPosition - 10_000).coerceAtLeast(0))
-                    }
-                    // Tapping on the right fast forwards the media
-                    x > gesture_area.width - sideGestureAreaWidth -> {
-                        val durationMs = player.duration
-                        val desired = player.currentPosition + 10_000
-                        player.seekTo(
-                            if (durationMs != C.TIME_UNSET) minOf(durationMs, desired) else desired
-                        )
-                    }
-                    // Tapping in the middle toggles the play/pause state
-                    else -> {
-                        player.playWhenReady = !player.playWhenReady
-                    }
-                }
-
-                return true
-            }
-        })
-
-        gesture_area.setOnTouchListener { _, event ->
-            val result = gestureDetector.onTouchEvent(event)
-
-            // When gesture finishes, ensure that the controls settle at a
-            // terminal position
-            if (event.action == MotionEvent.ACTION_UP) {
-                val closedPosition = player_view.height.toFloat()
-                val openPosition = closedPosition - controls_bar.height.toFloat()
-
-                val halfwayPoint = openPosition + ((closedPosition - openPosition) / 2)
-                if (controls_bar.y > halfwayPoint) {
-                    controls_bar.animate().y(closedPosition)
-                } else {
-                    controls_bar.animate().y(openPosition)
-                }
-            }
-
-            result
-        }
-
-        // Prevent touches on the controls bar from going through to the
-        // gesture area
-        controls_bar.setOnClickListener {}
-
-        // Show a play indicator when paused
         player.addListener(object : Player.EventListener {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-                val visibility = if (playWhenReady) View.GONE else View.VISIBLE
-                play_indicator.visibility = visibility
+                view.setIsPlaying(playWhenReady)
             }
         })
 
@@ -139,12 +67,11 @@ class PlayerActivity : AppCompatActivity() {
         player.playWhenReady = true
     }
 
-    private fun adjustPlaybackSpeed(by: Float) {
-        playbackSpeed += by
+    private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
+        playbackSpeed += delta
         player.playbackParameters = PlaybackParameters(playbackSpeed)
 
-        val formattedSpeed = String.format("%.1f", playbackSpeed)
-        playback_speed.text = getString(R.string.playback_speed_multiplier, formattedSpeed)
+        view.setPlaybackSpeed(playbackSpeed)
     }
 
     override fun onDestroy() {
