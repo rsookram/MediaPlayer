@@ -9,7 +9,7 @@ ext.sdkVersion = [
 ]
 
 ext.gradlePlugins = [
-        android: 'com.android.tools.build:gradle:3.2.1',
+        android: 'com.android.tools.build:gradle:3.3.0',
         kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
 ]
 
