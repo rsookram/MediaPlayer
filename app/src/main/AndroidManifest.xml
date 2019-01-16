@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="io.github.rsookram.mediaplayer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +24,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:scheme="https" />
                 <data android:scheme="content" />
                 <data android:scheme="file" />
                 <data android:mimeType="video/mpeg4" />
