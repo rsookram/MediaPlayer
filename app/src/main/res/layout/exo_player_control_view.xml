@@ -69,6 +69,7 @@
             android:padding="8dp"
             tools:text="1.5 x"
             android:textColor="?android:textColorSecondary"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
