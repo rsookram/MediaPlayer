@@ -7,12 +7,6 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
-
-private const val HLS_MIME_TYPE = "application/vnd.apple.mpegurl"
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -59,14 +53,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         })
 
-        val appName = getString(R.string.app_name)
-        val userAgent = playbackRequest.userAgent ?: Util.getUserAgent(this, appName)
-        val dataSourceFactory = DefaultDataSourceFactory(this, userAgent)
-        val mediaSourceFactory = if (playbackRequest.mimeType == HLS_MIME_TYPE)
-            HlsMediaSource.Factory(dataSourceFactory)
-        else
-            ExtractorMediaSource.Factory(dataSourceFactory)
-
+        val mediaSourceFactory = createMediaSourceFactory(this, playbackRequest)
         val mediaSource = mediaSourceFactory.createMediaSource(playbackRequest.uri)
 
         player.prepare(mediaSource)
