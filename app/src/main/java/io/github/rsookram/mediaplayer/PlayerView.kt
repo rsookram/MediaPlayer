@@ -1,7 +1,11 @@
 package io.github.rsookram.mediaplayer
 
-import android.view.*
+import android.view.GestureDetector
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isGone
 import com.google.android.exoplayer2.Player
 import kotlinx.android.synthetic.main.exo_player_control_view.view.*
 import kotlinx.android.synthetic.main.view_player.view.*
@@ -94,8 +98,7 @@ class PlayerView(container: ViewGroup, player: Player) {
     }
 
     fun setIsPlaying(isPlaying: Boolean) {
-        val visibility = if (isPlaying) View.GONE else View.VISIBLE
-        root.play_indicator.visibility = visibility
+        root.play_indicator.isGone = isPlaying
     }
 
     fun setPlaybackSpeed(speed: Float) {
