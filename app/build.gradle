@@ -42,6 +42,7 @@ dependencies {
 
     implementation libraries.exoplayer
     implementation libraries.exoplayerUi
+    implementation libraries.exoplayerHls
 
     implementation libraries.kotlin
 }

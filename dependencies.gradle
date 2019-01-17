@@ -21,6 +21,7 @@ ext.libraries = [
 
         exoplayer: "com.google.android.exoplayer:exoplayer-core:${versions.exoplayer}",
         exoplayerUi: "com.google.android.exoplayer:exoplayer-ui:${versions.exoplayer}",
+        exoplayerHls: "com.google.android.exoplayer:exoplayer-hls:${versions.exoplayer}",
 
         kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
 ]
