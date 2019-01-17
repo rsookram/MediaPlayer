@@ -108,12 +108,3 @@ class PlayerView(container: ViewGroup, player: Player) {
         )
     }
 }
-
-sealed class Event {
-    object DecreaseSpeed : Event()
-    object IncreaseSpeed : Event()
-
-    object Rewind : Event()
-    object FastForward : Event()
-    object TogglePlayPause : Event()
-}
