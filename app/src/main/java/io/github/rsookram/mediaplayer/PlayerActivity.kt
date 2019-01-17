@@ -1,7 +1,6 @@
 package io.github.rsookram.mediaplayer
 
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.C
@@ -31,7 +30,7 @@ class PlayerActivity : AppCompatActivity() {
             return
         }
 
-        enableImmersiveMode()
+        enableImmersiveMode(window.decorView)
 
         val container = findViewById<ViewGroup>(android.R.id.content)
         val view = PlayerView(container, player)
@@ -90,16 +89,7 @@ class PlayerActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
 
         if (hasFocus) {
-            enableImmersiveMode()
+            enableImmersiveMode(window.decorView)
         }
-    }
-
-    private fun enableImmersiveMode() {
-        window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
     }
 }
