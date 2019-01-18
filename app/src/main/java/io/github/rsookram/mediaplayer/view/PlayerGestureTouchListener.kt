@@ -1,8 +1,10 @@
-package io.github.rsookram.mediaplayer
+package io.github.rsookram.mediaplayer.view
 
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import io.github.rsookram.mediaplayer.Event
+import io.github.rsookram.mediaplayer.R
 
 class PlayerGestureTouchListener(
     private val gestureArea: View,

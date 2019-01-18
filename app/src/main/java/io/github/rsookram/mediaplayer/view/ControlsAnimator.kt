@@ -1,4 +1,4 @@
-package io.github.rsookram.mediaplayer
+package io.github.rsookram.mediaplayer.view
 
 import android.view.View
 

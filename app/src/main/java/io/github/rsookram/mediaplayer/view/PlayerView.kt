@@ -1,10 +1,12 @@
-package io.github.rsookram.mediaplayer
+package io.github.rsookram.mediaplayer.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import com.google.android.exoplayer2.Player
+import io.github.rsookram.mediaplayer.Event
+import io.github.rsookram.mediaplayer.R
 import kotlinx.android.synthetic.main.exo_player_control_view.view.*
 import kotlinx.android.synthetic.main.view_player.view.*
 

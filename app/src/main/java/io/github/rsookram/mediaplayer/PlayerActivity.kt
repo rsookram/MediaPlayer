@@ -7,6 +7,7 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
+import io.github.rsookram.mediaplayer.view.PlayerView
 
 class PlayerActivity : AppCompatActivity() {
 
