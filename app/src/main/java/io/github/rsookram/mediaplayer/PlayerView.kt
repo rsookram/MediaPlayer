@@ -25,10 +25,14 @@ class PlayerView(container: ViewGroup, player: Player) {
         root.decrease_speed.setOnClickListener { onEvent(Event.DecreaseSpeed) }
         root.increase_speed.setOnClickListener { onEvent(Event.IncreaseSpeed) }
 
+        val controlsAnimator = ControlsAnimator(
+            root.controls_bar, getPlayerHeight = { root.player_view.height }
+        )
+
         // Start with the controls hidden
         root.player_view.showController()
         root.controls_bar.doOnPreDraw {
-            root.controls_bar.y = root.player_view.height.toFloat()
+            controlsAnimator.setClosed()
         }
 
         val sideGestureAreaWidth = context.resources.getDimension(R.dimen.side_gesture_area_width)
@@ -43,15 +47,7 @@ class PlayerView(container: ViewGroup, player: Player) {
                 distanceX: Float,
                 distanceY: Float
             ): Boolean {
-                // Scrolling controls the position of the controls bar
-                val newY = root.controls_bar.y - distanceY
-                val barHeight = root.controls_bar.height.toFloat()
-
-                val closedPosition = root.player_view.height.toFloat()
-                val openPosition = closedPosition - barHeight
-
-                root.controls_bar.y = newY.coerceIn(openPosition, closedPosition)
-
+                controlsAnimator.handleScroll(distanceY)
                 return true
             }
 
@@ -74,18 +70,8 @@ class PlayerView(container: ViewGroup, player: Player) {
         root.gesture_area.setOnTouchListener { _, event ->
             val result = gestureDetector.onTouchEvent(event)
 
-            // When gesture finishes, ensure that the controls settle at a
-            // terminal position
             if (event.action == MotionEvent.ACTION_UP) {
-                val closedPosition = root.player_view.height.toFloat()
-                val openPosition = closedPosition - root.controls_bar.height.toFloat()
-
-                val halfwayPoint = openPosition + ((closedPosition - openPosition) / 2)
-                if (root.controls_bar.y > halfwayPoint) {
-                    root.controls_bar.animate().y(closedPosition)
-                } else {
-                    root.controls_bar.animate().y(openPosition)
-                }
+                controlsAnimator.settleToFinalPosition()
             }
 
             result
