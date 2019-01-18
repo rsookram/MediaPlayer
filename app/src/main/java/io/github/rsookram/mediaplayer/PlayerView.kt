@@ -1,8 +1,6 @@
 package io.github.rsookram.mediaplayer
 
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
@@ -22,8 +20,8 @@ class PlayerView(container: ViewGroup, player: Player) {
     init {
         root.player_view.player = player
 
-        root.decrease_speed.setOnClickListener { onEvent(Event.DecreaseSpeed) }
-        root.increase_speed.setOnClickListener { onEvent(Event.IncreaseSpeed) }
+        root.decrease_speed.setOnClickListener { pushEvent(Event.DecreaseSpeed) }
+        root.increase_speed.setOnClickListener { pushEvent(Event.IncreaseSpeed) }
 
         val controlsAnimator = ControlsAnimator(
             root.controls_bar, getPlayerHeight = { root.player_view.height }
@@ -35,52 +33,17 @@ class PlayerView(container: ViewGroup, player: Player) {
             controlsAnimator.setClosed()
         }
 
-        val sideGestureAreaWidth = context.resources.getDimension(R.dimen.side_gesture_area_width)
-
-        val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-
-            override fun onDown(e: MotionEvent): Boolean = true
-
-            override fun onScroll(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                distanceX: Float,
-                distanceY: Float
-            ): Boolean {
-                controlsAnimator.handleScroll(distanceY)
-                return true
-            }
-
-            override fun onDoubleTap(e: MotionEvent): Boolean {
-                val x = e.x
-
-                onEvent(when {
-                    x < sideGestureAreaWidth ->
-                        Event.Rewind
-                    x > root.gesture_area.width - sideGestureAreaWidth ->
-                        Event.FastForward
-                    else ->
-                        Event.TogglePlayPause
-                })
-
-                return true
-            }
-        })
-
-        root.gesture_area.setOnTouchListener { _, event ->
-            val result = gestureDetector.onTouchEvent(event)
-
-            if (event.action == MotionEvent.ACTION_UP) {
-                controlsAnimator.settleToFinalPosition()
-            }
-
-            result
-        }
-
+        root.gesture_area.setOnTouchListener(
+            PlayerGestureTouchListener(root.gesture_area, controlsAnimator, ::pushEvent)
+        )
 
         // Prevent touches on the controls bar from going through to the
         // gesture area
         root.controls_bar.setOnClickListener {}
+    }
+
+    private fun pushEvent(e: Event) {
+        onEvent(e)
     }
 
     fun setIsPlaying(isPlaying: Boolean) {
