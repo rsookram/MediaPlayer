@@ -32,6 +32,7 @@
                 <data android:mimeType="video/x-matroska" />
                 <data android:mimeType="video/mkv" />
                 <data android:mimeType="video/mpeg" />
+                <data android:mimeType="audio/mpeg" />
             </intent-filter>
 
             <!-- HLS support -->
