@@ -1,6 +1,8 @@
 package io.github.rsookram.mediaplayer
 
 import android.content.Intent
+import androidx.core.os.bundleOf
+import java.util.*
 
 class IntentParser {
 
@@ -8,20 +10,28 @@ class IntentParser {
         val uri = intent.data ?: return null
         val mimeType = intent.type ?: return null
 
-        val userAgent = cleanUserAgent(intent.getStringExtra("intent.extra.header.USER_AGENT"))
+        val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: bundleOf()
+        val headers = headersBundle.keySet()
+            .associateWith(headersBundle::getString)
+            .filter { (k, v) -> isValidHeader(k, v) }
+            .mapKeys { (k, _) -> k.toLowerCase(Locale.US) }
 
-        return PlaybackRequest(uri, mimeType, userAgent)
+        return PlaybackRequest(uri, mimeType, headers)
     }
 
-    private fun cleanUserAgent(userAgent: String?): String? {
-        if (userAgent.isNullOrBlank()) {
-            return null
+    private fun isValidHeader(name: String, value: String?): Boolean {
+        if (name.isBlank() || value.isNullOrBlank()) {
+            return false
         }
 
-        if (userAgent.any { (it <= '\u001f' && it != '\t') || it >= '\u007f' }) {
-            return null
+        if (name.any { it <= '\u0020' || it >= '\u007f' }) {
+            return false
         }
 
-        return userAgent
+        if (value.any { (it <= '\u001f' && it != '\t') || it >= '\u007f' }) {
+            return false
+        }
+
+        return true
     }
 }
