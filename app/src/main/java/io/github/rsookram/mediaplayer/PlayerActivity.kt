@@ -34,10 +34,10 @@ class PlayerActivity : AppCompatActivity() {
             when (event) {
                 Event.DecreaseSpeed -> adjustPlaybackSpeed(view, -0.1F)
                 Event.IncreaseSpeed -> adjustPlaybackSpeed(view, +0.1F)
-                Event.Rewind -> {
+                Event.Rewind -> if (player.isCurrentWindowSeekable) {
                     player.seekTo((player.currentPosition - 10_000).coerceAtLeast(0))
                 }
-                Event.FastForward -> {
+                Event.FastForward -> if (player.isCurrentWindowSeekable) {
                     val durationMs = player.duration
                     val desired = player.currentPosition + 10_000
                     player.seekTo(
