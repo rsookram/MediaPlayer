@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:scheme="http" />
                 <data android:scheme="https" />
                 <data android:scheme="content" />
                 <data android:scheme="file" />
@@ -31,6 +32,7 @@
                 <data android:mimeType="video/mp4" />
                 <data android:mimeType="video/x-matroska" />
                 <data android:mimeType="video/mkv" />
+                <data android:mimeType="video/x-flv" />
                 <data android:mimeType="video/mpeg" />
                 <data android:mimeType="audio/mpeg" />
             </intent-filter>
