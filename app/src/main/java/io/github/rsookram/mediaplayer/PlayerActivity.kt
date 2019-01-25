@@ -7,11 +7,13 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import io.github.rsookram.mediaplayer.view.PlayerView
 
 class PlayerActivity : AppCompatActivity() {
 
     private val player by lazy { ExoPlayerFactory.newSimpleInstance(this) }
+    private lateinit var notificationManager: PlayerNotificationManager
 
     private var playbackSpeed = 1.0F
 
@@ -59,6 +61,11 @@ class PlayerActivity : AppCompatActivity() {
 
         player.prepare(mediaSource)
         player.playWhenReady = true
+
+        val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
+        notificationManager = PlayerNotificationManager.createWithNotificationChannel(
+            this, "media", R.string.channel_media_playback, 1, DescriptionAdapter(title)
+        )
     }
 
     private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
@@ -68,8 +75,19 @@ class PlayerActivity : AppCompatActivity() {
         view.setPlaybackSpeed(playbackSpeed)
     }
 
+    override fun onStart() {
+        super.onStart()
+        notificationManager.setPlayer(null)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        notificationManager.setPlayer(player)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        notificationManager.setPlayer(null)
         player.release()
     }
 
