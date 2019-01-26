@@ -1,4 +1,4 @@
-package io.github.rsookram.mediaplayer
+package io.github.rsookram.mediaplayer.notification
 
 import android.app.PendingIntent
 import android.graphics.Bitmap

@@ -5,6 +5,7 @@
     package="io.github.rsookram.mediaplayer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="false"
@@ -49,6 +50,8 @@
                 <data android:mimeType="application/vnd.apple.mpegurl" />
             </intent-filter>
         </activity>
+
+        <service android:name=".notification.NotificationService" />
     </application>
 
 </manifest>
