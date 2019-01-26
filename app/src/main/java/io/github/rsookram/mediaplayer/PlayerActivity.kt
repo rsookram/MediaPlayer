@@ -10,7 +10,10 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import io.github.rsookram.mediaplayer.notification.DescriptionAdapter
 import io.github.rsookram.mediaplayer.notification.ServiceNotificationListener
+import io.github.rsookram.mediaplayer.notification.StopNotificationOnPauseListener
 import io.github.rsookram.mediaplayer.view.PlayerView
+
+private const val NOTIFICATION_ID = 1
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -66,10 +69,14 @@ class PlayerActivity : AppCompatActivity() {
 
         val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
         notificationManager = PlayerNotificationManager.createWithNotificationChannel(
-            this, "media", R.string.channel_media_playback, 1, DescriptionAdapter(title)
+            this, "media", R.string.channel_media_playback, NOTIFICATION_ID, DescriptionAdapter(title)
         ).apply {
             setNotificationListener(ServiceNotificationListener(this@PlayerActivity))
         }
+
+        player.addListener(StopNotificationOnPauseListener(stopNotification = {
+            notificationManager.setPlayer(null)
+        }))
     }
 
     private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
