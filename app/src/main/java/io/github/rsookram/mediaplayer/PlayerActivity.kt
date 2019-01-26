@@ -35,7 +35,7 @@ class PlayerActivity : AppCompatActivity() {
         enableImmersiveMode(window.decorView)
 
         val container = findViewById<ViewGroup>(android.R.id.content)
-        val view = PlayerView(container, player)
+        val view = PlayerView(container, player, playbackRequest.mediaType)
 
         view.onEvent = { event ->
             when (event) {

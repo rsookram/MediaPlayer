@@ -10,14 +10,19 @@ class IntentParser {
         val uri = intent.data ?: return null
         val mimeType = intent.type ?: return null
 
+        val mediaType = determineMediaType(mimeType)
+
         val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: bundleOf()
         val headers = headersBundle.keySet()
             .associateWith(headersBundle::getString)
             .filter { (k, v) -> isValidHeader(k, v) }
             .mapKeys { (k, _) -> k.toLowerCase(Locale.US) }
 
-        return PlaybackRequest(uri, mimeType, headers)
+        return PlaybackRequest(uri, mimeType, mediaType, headers)
     }
+
+    private fun determineMediaType(mimeType: String): MediaType =
+        if (mimeType.startsWith("audio/")) MediaType.AUDIO else MediaType.VIDEO
 
     private fun isValidHeader(name: String, value: String?): Boolean {
         if (name.isBlank() || value.isNullOrBlank()) {

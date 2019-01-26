@@ -7,11 +7,12 @@ import androidx.core.view.isGone
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
 import io.github.rsookram.mediaplayer.Event
+import io.github.rsookram.mediaplayer.MediaType
 import io.github.rsookram.mediaplayer.R
 import kotlinx.android.synthetic.main.exo_player_control_view.view.*
 import kotlinx.android.synthetic.main.view_player.view.*
 
-class PlayerView(container: ViewGroup, player: Player) {
+class PlayerView(container: ViewGroup, player: Player, mediaType: MediaType) {
 
     var onEvent: (Event) -> Unit = {}
 
@@ -21,6 +22,11 @@ class PlayerView(container: ViewGroup, player: Player) {
         .inflate(R.layout.view_player, container, true)
 
     init {
+        val controlsMode = when (mediaType) {
+            MediaType.AUDIO -> ControlsMode.ALWAYS_SHOW
+            MediaType.VIDEO -> ControlsMode.SCROLLABLE
+        }
+
         root.player_view.player = player
         root.player_view.setShowBuffering(PlayerView.SHOW_BUFFERING_ALWAYS)
 
@@ -31,14 +37,22 @@ class PlayerView(container: ViewGroup, player: Player) {
             root.controls_bar, getPlayerHeight = { root.player_view.height }
         )
 
-        // Start with the controls hidden
         root.player_view.showController()
-        root.controls_bar.doOnPreDraw {
-            controlsAnimator.setClosed()
+
+        if (controlsMode == ControlsMode.SCROLLABLE) {
+            // Start with the controls hidden
+            root.controls_bar.doOnPreDraw {
+                controlsAnimator.setClosed()
+            }
         }
 
         root.gesture_area.setOnTouchListener(
-            PlayerGestureTouchListener(root.gesture_area, controlsAnimator, ::pushEvent)
+            PlayerGestureTouchListener(
+                root.gesture_area,
+                controlsAnimator,
+                isScrollEnabled = controlsMode == ControlsMode.SCROLLABLE,
+                pushEvent = ::pushEvent
+            )
         )
 
         // Prevent touches on the controls bar from going through to the
@@ -60,4 +74,8 @@ class PlayerView(container: ViewGroup, player: Player) {
             R.string.playback_speed_multiplier, formattedSpeed
         )
     }
+}
+
+private enum class ControlsMode {
+    SCROLLABLE, ALWAYS_SHOW
 }
