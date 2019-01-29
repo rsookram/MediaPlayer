@@ -12,7 +12,7 @@ import io.github.rsookram.mediaplayer.R
 import kotlinx.android.synthetic.main.exo_player_control_view.view.*
 import kotlinx.android.synthetic.main.view_player.view.*
 
-class PlayerView(container: ViewGroup, player: Player, mediaType: MediaType) {
+class PlayerView(container: ViewGroup, player: Player, title: String, mediaType: MediaType) {
 
     var onEvent: (Event) -> Unit = {}
 
@@ -58,6 +58,8 @@ class PlayerView(container: ViewGroup, player: Player, mediaType: MediaType) {
         // Prevent touches on the controls bar from going through to the
         // gesture area
         root.controls_bar.setOnClickListener {}
+
+        root.controls_bar.title.text = title
     }
 
     private fun pushEvent(e: Event) {

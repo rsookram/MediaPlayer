@@ -37,8 +37,10 @@ class PlayerActivity : AppCompatActivity() {
 
         enableImmersiveMode(window.decorView)
 
+        val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
+
         val container = findViewById<ViewGroup>(android.R.id.content)
-        val view = PlayerView(container, player, playbackRequest.mediaType)
+        val view = PlayerView(container, player, title, playbackRequest.mediaType)
 
         view.onEvent = { event ->
             when (event) {
@@ -73,7 +75,6 @@ class PlayerActivity : AppCompatActivity() {
         MediaSessionConnector(mediaSession).setPlayer(player, null)
         mediaSession.isActive = true
 
-        val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
         notificationManager = PlayerNotificationManager.createWithNotificationChannel(
             this, "media", R.string.channel_media_playback, NOTIFICATION_ID, DescriptionAdapter(title)
         ).apply {

@@ -66,17 +66,32 @@
         </FrameLayout>
 
         <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:includeFontPadding="false"
+            tools:text="a_video.mp4"
+            android:textColor="?android:textColorPrimary"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/play_pause_container"
+            app:layout_constraintLeft_toRightOf="@id/play_pause_container"
+            app:layout_constraintRight_toLeftOf="@id/decrease_speed"
+            app:layout_constraintBottom_toTopOf="@id/exo_position"/>
+
+        <TextView
             android:id="@id/exo_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
             android:includeFontPadding="false"
             tools:text="00:01"
             android:textColor="?android:textColorSecondary"
-            app:layout_constraintLeft_toRightOf="@id/play_pause_container"
-            app:layout_constraintTop_toTopOf="@id/play_pause_container"
+            app:layout_constraintLeft_toLeftOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintBottom_toBottomOf="@id/play_pause_container"/>
 
         <TextView
@@ -84,8 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             android:includeFontPadding="false"
             android:text="/"
             android:textColor="?android:textColorTertiary"
@@ -98,8 +113,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
             android:includeFontPadding="false"
             tools:text="24:30"
             android:textColor="?android:textColorTertiary"
