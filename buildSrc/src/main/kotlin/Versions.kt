@@ -1,7 +1,10 @@
 object Versions {
 
     private const val kotlin = "1.3.21"
-    private const val exoplayer = "2.9.6"
+
+    // 2.9.3 works fine, but 2.9.4 is stricter and fails to play some invalid files
+    // https://github.com/google/ExoPlayer/commit/32bad6915851b39a48d5385b1268a87d87d7ff20#diff-bf2270d195b25f7412752dbbd0d3fecaR120
+    private const val exoplayer = "2.9.3"
 
     val minSdk = 23
     val targetSdk = 28
