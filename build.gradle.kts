@@ -5,8 +5,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath Versions.androidGradlePlugin
-        classpath Versions.kotlinGradlePlugin
+        classpath(Versions.androidGradlePlugin)
+        classpath(Versions.kotlinGradlePlugin)
     }
 }
 
