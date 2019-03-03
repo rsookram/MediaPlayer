@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion sdkVersion.target
+    compileSdkVersion Versions.targetSdk
 
     defaultConfig {
         applicationId 'io.github.rsookram.mediaplayer'
-        minSdkVersion sdkVersion.min
-        targetSdkVersion sdkVersion.target
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -52,14 +52,14 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 dependencies {
-    implementation libraries.appCompat
-    implementation libraries.constraintLayout
+    implementation Versions.appCompat
+    implementation Versions.constraintLayout
 
-    implementation libraries.ktxCore
+    implementation Versions.ktxCore
 
-    implementation libraries.exoplayer
-    implementation libraries.exoplayerUi
-    implementation libraries.exoplayerHls
+    implementation Versions.exoplayerCore
+    implementation Versions.exoplayerUi
+    implementation Versions.exoplayerHls
 
-    implementation libraries.kotlin
+    implementation Versions.kotlinStdlib
 }

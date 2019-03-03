@@ -1,16 +1,12 @@
-apply from: 'dependencies.gradle'
-
 buildscript {
-
-    apply from: 'dependencies.gradle'
 
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath gradlePlugins.android
-        classpath gradlePlugins.kotlin
+        classpath Versions.androidGradlePlugin
+        classpath Versions.kotlinGradlePlugin
     }
 }
 
