@@ -60,7 +60,6 @@ dependencies {
     implementation libraries.exoplayer
     implementation libraries.exoplayerUi
     implementation libraries.exoplayerHls
-    implementation libraries.exoplayerMediaSession
 
     implementation libraries.kotlin
 }

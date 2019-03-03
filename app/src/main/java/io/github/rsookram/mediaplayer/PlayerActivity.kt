@@ -1,14 +1,12 @@
 package io.github.rsookram.mediaplayer
 
 import android.os.Bundle
-import android.support.v4.media.session.MediaSessionCompat
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import io.github.rsookram.mediaplayer.notification.DescriptionAdapter
 import io.github.rsookram.mediaplayer.notification.ServiceNotificationListener
@@ -20,7 +18,6 @@ private const val NOTIFICATION_ID = 1
 class PlayerActivity : AppCompatActivity() {
 
     private val player by lazy { ExoPlayerFactory.newSimpleInstance(this) }
-    private val mediaSession by lazy { MediaSessionCompat(this, "media") }
     private lateinit var notificationManager: PlayerNotificationManager
 
     private var playbackSpeed = 1.0F
@@ -72,9 +69,6 @@ class PlayerActivity : AppCompatActivity() {
         player.prepare(mediaSource)
         player.playWhenReady = true
 
-        MediaSessionConnector(mediaSession).setPlayer(player, null)
-        mediaSession.isActive = true
-
         notificationManager = PlayerNotificationManager.createWithNotificationChannel(
             this, "media", R.string.channel_media_playback, NOTIFICATION_ID, DescriptionAdapter(title)
         ).apply {
@@ -107,7 +101,6 @@ class PlayerActivity : AppCompatActivity() {
         super.onDestroy()
         notificationManager.setPlayer(null)
         player.release()
-        mediaSession.release()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
