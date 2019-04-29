@@ -6,20 +6,20 @@ object Versions {
     // https://github.com/google/ExoPlayer/commit/32bad6915851b39a48d5385b1268a87d87d7ff20#diff-bf2270d195b25f7412752dbbd0d3fecaR120
     private const val exoplayer = "2.9.3"
 
-    val minSdk = 23
-    val targetSdk = 28
+    const val minSdk = 23
+    const val targetSdk = 28
 
-    val androidGradlePlugin = "com.android.tools.build:gradle:3.4.0"
-    val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:3.4.0"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
 
-    val appCompat = "androidx.appcompat:appcompat:1.0.2"
-    val constraintLayout = "androidx.constraintlayout:constraintlayout:1.1.3"
+    const val appCompat = "androidx.appcompat:appcompat:1.0.2"
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout:1.1.3"
 
-    val ktxCore = "androidx.core:core-ktx:1.0.1"
+    const val ktxCore = "androidx.core:core-ktx:1.0.1"
 
-    val exoplayerCore = "com.google.android.exoplayer:exoplayer-core:$exoplayer"
-    val exoplayerUi = "com.google.android.exoplayer:exoplayer-ui:$exoplayer"
-    val exoplayerHls = "com.google.android.exoplayer:exoplayer-hls:$exoplayer"
+    const val exoplayerCore = "com.google.android.exoplayer:exoplayer-core:$exoplayer"
+    const val exoplayerUi = "com.google.android.exoplayer:exoplayer-ui:$exoplayer"
+    const val exoplayerHls = "com.google.android.exoplayer:exoplayer-hls:$exoplayer"
 
-    val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin"
+    const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin"
 }
