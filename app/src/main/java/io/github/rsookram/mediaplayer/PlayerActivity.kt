@@ -94,7 +94,13 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        notificationManager.setPlayer(player)
+
+        // If the player is set when finishing, it will get unset shortly after
+        // in onDestroy. This causes Context.stopService to be called before
+        // Service.startForeground, which will crash the app.
+        if (!isFinishing) {
+            notificationManager.setPlayer(player)
+        }
     }
 
     override fun onDestroy() {
