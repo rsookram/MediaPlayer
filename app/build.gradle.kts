@@ -20,7 +20,7 @@ android {
     }
 
     compileOptions {
-        setTargetCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -34,7 +34,7 @@ android {
 
     buildTypes {
         getByName("debug") {
-            setSigningConfig(signingConfigs.getByName("debug"))
+            signingConfig = signingConfigs.getByName("debug")
         }
         getByName("release") {
             isShrinkResources = true
@@ -42,7 +42,7 @@ android {
             proguardFiles("proguard-android.txt", "proguard-rules.pro")
 
             // Just for testing release builds. Not actually distributed.
-            setSigningConfig(signingConfigs.getByName("debug"))
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
