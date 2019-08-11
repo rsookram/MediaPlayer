@@ -39,7 +39,7 @@ android {
         getByName("release") {
             isShrinkResources = true
             isMinifyEnabled = true
-            proguardFiles("proguard-android.txt", "proguard-rules.pro")
+            proguardFiles("proguard-rules.pro")
 
             // Just for testing release builds. Not actually distributed.
             signingConfig = signingConfigs.getByName("debug")
