@@ -1,8 +1,8 @@
 package io.github.rsookram.mediaplayer
 
 import android.content.Context
-import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.source.ads.AdsMediaSource
+import com.google.android.exoplayer2.source.MediaSourceFactory
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
@@ -13,7 +13,7 @@ private const val HLS_MIME_TYPE = "application/vnd.apple.mpegurl"
 fun createMediaSourceFactory(
     context: Context,
     playbackRequest: PlaybackRequest
-): AdsMediaSource.MediaSourceFactory {
+): MediaSourceFactory {
     val appName = context.getString(R.string.app_name)
     val userAgent = playbackRequest.headers["user-agent"] ?: Util.getUserAgent(context, appName)
     val httpDataSourceFactory = DefaultHttpDataSourceFactory(userAgent).apply {
@@ -24,5 +24,5 @@ fun createMediaSourceFactory(
     return if (playbackRequest.mimeType == HLS_MIME_TYPE)
         HlsMediaSource.Factory(dataSourceFactory)
     else
-        ExtractorMediaSource.Factory(dataSourceFactory)
+        ProgressiveMediaSource.Factory(dataSourceFactory)
 }

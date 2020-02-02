@@ -4,9 +4,10 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.ViewGroup
 import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import io.github.rsookram.mediaplayer.notification.DescriptionAdapter
 import io.github.rsookram.mediaplayer.notification.ServiceNotificationListener
@@ -17,7 +18,20 @@ private const val NOTIFICATION_ID = 1
 
 class PlayerActivity : Activity() {
 
-    private val player by lazy { ExoPlayerFactory.newSimpleInstance(this) }
+    private val player by lazy {
+        SimpleExoPlayer.Builder(this)
+            .setTrackSelector(
+                DefaultTrackSelector(this).apply {
+                    // For some reason the video track needs to be disabled to
+                    // disable subs
+                    parameters = buildUponParameters()
+                        .setRendererDisabled(C.TRACK_TYPE_VIDEO, true)
+                        .clearSelectionOverrides()
+                        .build()
+                }
+            )
+            .build()
+    }
     private lateinit var notificationManager: PlayerNotificationManager
 
     private var playbackSpeed = 1.0F
@@ -70,10 +84,14 @@ class PlayerActivity : Activity() {
         player.playWhenReady = true
 
         notificationManager = PlayerNotificationManager.createWithNotificationChannel(
-            this, "media", R.string.channel_media_playback, NOTIFICATION_ID, DescriptionAdapter(title)
-        ).apply {
-            setNotificationListener(ServiceNotificationListener(this@PlayerActivity))
-        }
+            this,
+            "media",
+            R.string.channel_media_playback,
+            0,
+            NOTIFICATION_ID,
+            DescriptionAdapter(title),
+            ServiceNotificationListener(this@PlayerActivity)
+        )
 
         player.addListener(StopNotificationOnPauseListener(stopNotification = {
             notificationManager.setPlayer(null)
@@ -82,7 +100,7 @@ class PlayerActivity : Activity() {
 
     private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
         playbackSpeed += delta
-        player.playbackParameters = PlaybackParameters(playbackSpeed)
+        player.setPlaybackParameters(PlaybackParameters(playbackSpeed))
 
         view.setPlaybackSpeed(playbackSpeed)
     }
