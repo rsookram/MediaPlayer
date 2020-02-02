@@ -33,8 +33,8 @@ in the background.
 
 This app is written in Kotlin and uses
 [ExoPlayer](https://github.com/google/ExoPlayer) to handle media playback.
-AppCompat and ConstraintLayout are used for the UI. And there's also KTX for
-some Kotlin niceness.
+ConstraintLayout is used for the UI. And there's also KTX for some Kotlin
+niceness.
 
 
 License
