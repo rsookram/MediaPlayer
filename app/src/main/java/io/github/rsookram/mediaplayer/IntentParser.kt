@@ -1,6 +1,7 @@
 package io.github.rsookram.mediaplayer
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.core.os.bundleOf
 import java.util.*
 
@@ -13,16 +14,28 @@ class IntentParser {
         val mediaType = determineMediaType(mimeType)
 
         val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: bundleOf()
-        val headers = headersBundle.keySet()
-            .associateWith(headersBundle::getString)
-            .filter { (k, v) -> isValidHeader(k, v) }
-            .mapKeys { (k, _) -> k.toLowerCase(Locale.US) }
+        val headers = parseHeaders(headersBundle)
 
         return PlaybackRequest(uri, mimeType, mediaType, headers)
     }
 
     private fun determineMediaType(mimeType: String): MediaType =
         if (mimeType.startsWith("audio/")) MediaType.AUDIO else MediaType.VIDEO
+
+    private fun parseHeaders(bundle: Bundle): Map<String, String> {
+        val headers = mutableMapOf<String, String>()
+
+        for (k in bundle.keySet()) {
+            val value = bundle.getString(k)
+            if (value != null) {
+                headers[k] = value
+            }
+        }
+
+        return headers
+            .filter { (k, v) -> isValidHeader(k, v) }
+            .mapKeys { (k, _) -> k.toLowerCase(Locale.US) }
+    }
 
     private fun isValidHeader(name: String, value: String?): Boolean {
         if (name.isBlank() || value.isNullOrBlank()) {

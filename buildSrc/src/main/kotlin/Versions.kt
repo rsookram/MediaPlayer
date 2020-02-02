@@ -7,7 +7,7 @@ object Versions {
     private const val exoplayer = "2.9.3"
 
     const val minSdk = 25
-    const val targetSdk = 28
+    const val targetSdk = 29
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:3.5.3"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
