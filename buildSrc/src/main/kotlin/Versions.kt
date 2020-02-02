@@ -14,7 +14,7 @@ object Versions {
 
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:1.1.3"
 
-    const val ktxCore = "androidx.core:core-ktx:1.0.2"
+    const val ktxCore = "androidx.core:core-ktx:1.1.0"
 
     const val exoplayerCore = "com.google.android.exoplayer:exoplayer-core:$exoplayer"
     const val exoplayerUi = "com.google.android.exoplayer:exoplayer-ui:$exoplayer"
