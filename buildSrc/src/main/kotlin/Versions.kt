@@ -12,7 +12,6 @@ object Versions {
     const val androidGradlePlugin = "com.android.tools.build:gradle:3.5.0"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
 
-    const val appCompat = "androidx.appcompat:appcompat:1.0.2"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val ktxCore = "androidx.core:core-ktx:1.0.2"

@@ -1,8 +1,8 @@
 package io.github.rsookram.mediaplayer
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.PlaybackParameters
@@ -15,7 +15,7 @@ import io.github.rsookram.mediaplayer.view.PlayerView
 
 private const val NOTIFICATION_ID = 1
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : Activity() {
 
     private val player by lazy { ExoPlayerFactory.newSimpleInstance(this) }
     private lateinit var notificationManager: PlayerNotificationManager

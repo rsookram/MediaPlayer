@@ -56,7 +56,6 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
-    implementation(Versions.appCompat)
     implementation(Versions.constraintLayout)
 
     implementation(Versions.ktxCore)
