@@ -62,8 +62,6 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
-    implementation(Versions.constraintLayout)
-
     implementation(Versions.ktxCore)
 
     implementation(Versions.exoplayerCore)

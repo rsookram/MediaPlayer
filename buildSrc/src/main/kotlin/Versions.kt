@@ -10,8 +10,6 @@ object Versions {
     const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.1"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
 
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:1.1.3"
-
     const val ktxCore = "androidx.core:core-ktx:1.2.0"
 
     const val exoplayerCore = "com.google.android.exoplayer:exoplayer-core:$exoplayer"
