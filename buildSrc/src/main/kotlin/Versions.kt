@@ -1,6 +1,6 @@
 object Versions {
 
-    private const val kotlin = "1.3.61"
+    private const val kotlin = "1.3.70"
 
     private const val exoplayer = "2.11.1"
 
