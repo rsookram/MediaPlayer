@@ -48,7 +48,8 @@ class PlayerGestureTouchListener(
 
                 return true
             }
-        })
+        }
+    )
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         val result = gestureDetector.onTouchEvent(event)
