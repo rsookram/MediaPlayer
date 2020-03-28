@@ -1,6 +1,7 @@
 package io.github.rsookram.mediaplayer
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import java.util.*
@@ -9,6 +10,7 @@ class IntentParser {
 
     fun parse(intent: Intent): PlaybackRequest? {
         val uri = intent.data ?: return null
+        val audioUri = intent.getParcelableExtra<Uri>("intent.extra.uri.audio")
         val mimeType = intent.type ?: return null
 
         val mediaType = determineMediaType(mimeType)
@@ -16,7 +18,7 @@ class IntentParser {
         val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: bundleOf()
         val headers = parseHeaders(headersBundle)
 
-        return PlaybackRequest(uri, mimeType, mediaType, headers)
+        return PlaybackRequest(uri, audioUri, mimeType, mediaType, headers)
     }
 
     private fun determineMediaType(mimeType: String): MediaType =
