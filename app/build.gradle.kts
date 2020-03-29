@@ -66,7 +66,6 @@ dependencies {
 
     implementation(Versions.exoplayerCore)
     implementation(Versions.exoplayerUi)
-    implementation(Versions.exoplayerHls)
 
     implementation(Versions.kotlinStdlib)
 }
