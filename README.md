@@ -15,7 +15,7 @@ seeking, double-tapping on the left will rewind by 10 seconds, and
 double-tapping on the right will fast forward by 10 seconds.
 
 
-## Permisssions
+## Permissions
 
 ### Internet
 
