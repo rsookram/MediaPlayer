@@ -2,7 +2,7 @@ object Versions {
 
     private const val kotlin = "1.3.72"
 
-    private const val exoplayer = "2.11.3"
+    private const val exoplayer = "2.11.4"
 
     const val minSdk = 25
     const val targetSdk = 29
