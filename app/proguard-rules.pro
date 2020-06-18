@@ -1,5 +1,4 @@
 -allowaccessmodification
--dontpreverify
 
 -overloadaggressively
 
