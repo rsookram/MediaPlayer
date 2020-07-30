@@ -16,7 +16,7 @@
 
         <activity
             android:name=".PlayerActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden">
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|uiMode|colorMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
