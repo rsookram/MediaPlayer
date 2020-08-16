@@ -26,12 +26,12 @@ class NotificationService : Service() {
 
     companion object {
 
-        fun newIntent(context: Context, notificationId: Int, notification: Notification): Intent =
+        fun newIntent(context: Context, notificationId: Int, notification: Notification) =
             newIntent(context)
                 .putExtra(EXTRA_NOTIFICATION_ID, notificationId)
                 .putExtra(EXTRA_NOTIFICATION, notification)
 
-        fun newIntent(context: Context): Intent =
+        fun newIntent(context: Context) =
             Intent(context, NotificationService::class.java)
     }
 }

@@ -10,7 +10,7 @@ class PlayerGestureTouchListener(
     private val gestureArea: View,
     private val controlsAnimator: ControlsAnimator,
     private val isScrollEnabled: Boolean,
-    private val pushEvent: (Event) -> Unit
+    private val pushEvent: (Event) -> Unit,
 ) : View.OnTouchListener {
 
     private val context = gestureArea.context

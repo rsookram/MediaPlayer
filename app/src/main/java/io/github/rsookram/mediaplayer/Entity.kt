@@ -7,9 +7,9 @@ data class PlaybackRequest(
     val audioUri: Uri?,
     val mimeType: String,
     val mediaType: MediaType,
-    val headers: Map<String, String>
+    val headers: Map<String, String>,
 )
 
 enum class MediaType {
-    AUDIO, VIDEO
+    AUDIO, VIDEO,
 }

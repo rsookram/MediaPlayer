@@ -79,5 +79,5 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
 }
 
 private enum class ControlsMode {
-    SCROLLABLE, ALWAYS_SHOW
+    SCROLLABLE, ALWAYS_SHOW,
 }
