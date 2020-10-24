@@ -2,6 +2,7 @@ package io.github.rsookram.mediaplayer
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.ViewGroup
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.MediaItem
@@ -60,17 +61,9 @@ class PlayerActivity : Activity() {
             when (event) {
                 Event.DecreaseSpeed -> adjustPlaybackSpeed(view, -0.1F)
                 Event.IncreaseSpeed -> adjustPlaybackSpeed(view, +0.1F)
-                Event.Rewind -> if (player.isCurrentWindowSeekable) {
-                    player.seekTo((player.currentPosition - 10_000).coerceAtLeast(0))
-                }
-                Event.FastForward -> if (player.isCurrentWindowSeekable) {
-                    val durationMs = player.duration
-                    val desired = player.currentPosition + 10_000
-                    player.seekTo(
-                        if (durationMs != C.TIME_UNSET) minOf(durationMs, desired) else desired
-                    )
-                }
-                Event.TogglePlayPause -> player.playWhenReady = !player.playWhenReady
+                Event.Rewind -> rewind()
+                Event.FastForward -> fastForward()
+                Event.TogglePlayPause -> togglePlayPause()
             }
         }
 
@@ -99,6 +92,26 @@ class PlayerActivity : Activity() {
         player.addListener(StopNotificationOnPauseListener(stopNotification = {
             notificationManager.setPlayer(null)
         }))
+    }
+
+    private fun rewind() {
+        if (!player.isCurrentWindowSeekable) return
+
+        player.seekTo((player.currentPosition - 10_000).coerceAtLeast(0))
+    }
+
+    private fun fastForward() {
+        if (!player.isCurrentWindowSeekable) return
+
+        val durationMs = player.duration
+        val desired = player.currentPosition + 10_000
+        player.seekTo(
+            if (durationMs != C.TIME_UNSET) minOf(durationMs, desired) else desired
+        )
+    }
+
+    private fun togglePlayPause() {
+        player.playWhenReady = !player.playWhenReady
     }
 
     private fun createMediaSource(playbackRequest: PlaybackRequest): MediaSource {
@@ -142,6 +155,23 @@ class PlayerActivity : Activity() {
         notificationManager.setPlayer(null)
         player.release()
     }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean =
+        when (keyCode) {
+            KeyEvent.KEYCODE_DPAD_LEFT -> {
+                rewind()
+                true
+            }
+            KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                fastForward()
+                true
+            }
+            KeyEvent.KEYCODE_SPACE -> {
+                togglePlayPause()
+                true
+            }
+            else -> super.onKeyUp(keyCode, event)
+        }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)

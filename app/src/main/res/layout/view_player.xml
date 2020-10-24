@@ -5,7 +5,6 @@
     android:id="@+id/player_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
     android:keepScreenOn="true"
     app:show_timeout="0"
     app:hide_on_touch="false"
