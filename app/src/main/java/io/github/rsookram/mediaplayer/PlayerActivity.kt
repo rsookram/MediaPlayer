@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.ViewGroup
 import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -81,7 +82,8 @@ class PlayerActivity : Activity() {
 
         val mediaSource = createMediaSource(playbackRequest)
 
-        player.prepare(mediaSource)
+        player.setMediaSource(mediaSource)
+        player.prepare()
         player.playWhenReady = true
 
         notificationManager = PlayerNotificationManager.createWithNotificationChannel(
@@ -104,11 +106,11 @@ class PlayerActivity : Activity() {
 
         return if (playbackRequest.audioUri != null) {
             MergingMediaSource(
-                mediaSourceFactory.createMediaSource(playbackRequest.uri),
-                mediaSourceFactory.createMediaSource(playbackRequest.audioUri)
+                mediaSourceFactory.createMediaSource(MediaItem.fromUri(playbackRequest.uri)),
+                mediaSourceFactory.createMediaSource(MediaItem.fromUri(playbackRequest.audioUri))
             )
         } else {
-            mediaSourceFactory.createMediaSource(playbackRequest.uri)
+            mediaSourceFactory.createMediaSource(MediaItem.fromUri(playbackRequest.uri))
         }
     }
 

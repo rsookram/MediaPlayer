@@ -1,6 +1,6 @@
 object Versions {
 
-    private const val exoplayer = "2.11.7"
+    private const val exoplayer = "2.12.1"
 
     const val minSdk = 25
     const val targetSdk = 29
