@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewGroup
 import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.MergingMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import io.github.rsookram.mediaplayer.notification.DescriptionAdapter
@@ -73,7 +70,7 @@ class PlayerActivity : Activity() {
             }
         })
 
-        val mediaSource = createMediaSource(playbackRequest)
+        val mediaSource = createMediaSource(this, playbackRequest)
 
         player.setMediaSource(mediaSource)
         player.prepare()
@@ -112,19 +109,6 @@ class PlayerActivity : Activity() {
 
     private fun togglePlayPause() {
         player.playWhenReady = !player.playWhenReady
-    }
-
-    private fun createMediaSource(playbackRequest: PlaybackRequest): MediaSource {
-        val mediaSourceFactory = createMediaSourceFactory(this, playbackRequest)
-
-        return if (playbackRequest.audioUri != null) {
-            MergingMediaSource(
-                mediaSourceFactory.createMediaSource(MediaItem.fromUri(playbackRequest.uri)),
-                mediaSourceFactory.createMediaSource(MediaItem.fromUri(playbackRequest.audioUri))
-            )
-        } else {
-            mediaSourceFactory.createMediaSource(MediaItem.fromUri(playbackRequest.uri))
-        }
     }
 
     private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
