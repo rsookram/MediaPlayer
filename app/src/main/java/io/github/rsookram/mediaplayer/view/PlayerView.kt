@@ -24,21 +24,21 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
 
     private val root = ExoPlayerControlViewBinding.bind(playerView)
 
-    init {
-        val controlsMode = when (mediaType) {
-            MediaType.AUDIO -> ControlsMode.ALWAYS_SHOW
-            MediaType.VIDEO -> ControlsMode.SCROLLABLE
-        }
+    private val controlsMode = when (mediaType) {
+        MediaType.AUDIO -> ControlsMode.ALWAYS_SHOW
+        MediaType.VIDEO -> ControlsMode.SCROLLABLE
+    }
 
+    private val controlsAnimator by lazy {
+        ControlsAnimator(root.controlsBar, getPlayerHeight = { playerView.height })
+    }
+
+    init {
         playerView.player = player
         playerView.setShowBuffering(PlayerView.SHOW_BUFFERING_ALWAYS)
 
         root.decreaseSpeed.setOnClickListener { pushEvent(Event.DecreaseSpeed) }
         root.increaseSpeed.setOnClickListener { pushEvent(Event.IncreaseSpeed) }
-
-        val controlsAnimator = ControlsAnimator(
-            root.controlsBar, getPlayerHeight = { playerView.height }
-        )
 
         playerView.showController()
 
@@ -78,6 +78,12 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
         root.playbackSpeed.text = context.getString(
             R.string.playback_speed_multiplier, formattedSpeed
         )
+    }
+
+    fun toggleControls() {
+        if (controlsMode == ControlsMode.ALWAYS_SHOW) return
+
+        controlsAnimator.toggleDisplay()
     }
 }
 

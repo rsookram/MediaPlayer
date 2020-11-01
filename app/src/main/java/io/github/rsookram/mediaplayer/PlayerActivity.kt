@@ -173,6 +173,10 @@ class PlayerActivity : Activity() {
                 togglePlayPause()
                 true
             }
+            KeyEvent.KEYCODE_MENU -> {
+                view.toggleControls()
+                true
+            }
             else -> super.onKeyUp(keyCode, event)
         }
 

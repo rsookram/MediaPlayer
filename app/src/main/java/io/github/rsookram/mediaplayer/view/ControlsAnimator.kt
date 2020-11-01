@@ -4,6 +4,13 @@ import android.view.View
 
 class ControlsAnimator(private val controls: View, private val getPlayerHeight: () -> Int) {
 
+    fun toggleDisplay() {
+        when (controls.y) {
+            getOpenedY() -> animateTo(getClosedY())
+            getClosedY() -> animateTo(getOpenedY())
+        }
+    }
+
     fun setClosed() {
         controls.y = getClosedY()
     }
@@ -16,8 +23,13 @@ class ControlsAnimator(private val controls: View, private val getPlayerHeight: 
     fun settleToFinalPosition() {
         val halfwayPoint = getOpenedY() + ((getClosedY() - getOpenedY()) / 2)
 
-        controls.animate()
-            .y(if (controls.y > halfwayPoint) getClosedY() else getOpenedY())
+        animateTo(
+            if (controls.y > halfwayPoint) getClosedY() else getOpenedY()
+        )
+    }
+
+    private fun animateTo(y: Float) {
+        controls.animate().y(y)
     }
 
     private fun getOpenedY(): Float = getClosedY() - controls.height.toFloat()
