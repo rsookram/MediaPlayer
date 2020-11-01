@@ -33,6 +33,9 @@ class PlayerActivity : Activity() {
             )
             .build()
     }
+
+    private lateinit var view: PlayerView
+
     private lateinit var notificationManager: PlayerNotificationManager
 
     private var playbackSpeed = 1.0F
@@ -52,12 +55,12 @@ class PlayerActivity : Activity() {
         val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
 
         val container = findViewById<ViewGroup>(android.R.id.content)
-        val view = PlayerView(container, player, title, playbackRequest.mediaType)
+        view = PlayerView(container, player, title, playbackRequest.mediaType)
 
         view.onEvent = { event ->
             when (event) {
-                Event.DecreaseSpeed -> adjustPlaybackSpeed(view, -0.1F)
-                Event.IncreaseSpeed -> adjustPlaybackSpeed(view, +0.1F)
+                Event.DecreaseSpeed -> decreaseSpeed(view)
+                Event.IncreaseSpeed -> increaseSpeed(view)
                 Event.Rewind -> rewind()
                 Event.FastForward -> fastForward()
                 Event.TogglePlayPause -> togglePlayPause()
@@ -91,6 +94,21 @@ class PlayerActivity : Activity() {
         }))
     }
 
+    private fun decreaseSpeed(view: PlayerView) {
+        adjustPlaybackSpeed(view, -0.1F)
+    }
+
+    private fun increaseSpeed(view: PlayerView) {
+        adjustPlaybackSpeed(view, +0.1F)
+    }
+
+    private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
+        playbackSpeed += delta
+        player.setPlaybackParameters(PlaybackParameters(playbackSpeed))
+
+        view.setPlaybackSpeed(playbackSpeed)
+    }
+
     private fun rewind() {
         if (!player.isCurrentWindowSeekable) return
 
@@ -109,13 +127,6 @@ class PlayerActivity : Activity() {
 
     private fun togglePlayPause() {
         player.playWhenReady = !player.playWhenReady
-    }
-
-    private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
-        playbackSpeed += delta
-        player.setPlaybackParameters(PlaybackParameters(playbackSpeed))
-
-        view.setPlaybackSpeed(playbackSpeed)
     }
 
     override fun onStart() {
@@ -148,6 +159,14 @@ class PlayerActivity : Activity() {
             }
             KeyEvent.KEYCODE_DPAD_RIGHT -> {
                 fastForward()
+                true
+            }
+            KeyEvent.KEYCODE_DPAD_DOWN -> {
+                decreaseSpeed(view)
+                true
+            }
+            KeyEvent.KEYCODE_DPAD_UP -> {
+                increaseSpeed(view)
                 true
             }
             KeyEvent.KEYCODE_SPACE -> {
