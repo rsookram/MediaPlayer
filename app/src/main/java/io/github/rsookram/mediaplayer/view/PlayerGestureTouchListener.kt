@@ -36,17 +36,17 @@ class PlayerGestureTouchListener(
                 return isScrollEnabled
             }
 
-            override fun onDoubleTap(e: MotionEvent): Boolean {
-                pushEvent(when {
-                    e.x < sideGestureAreaWidth ->
-                        Event.Rewind
-                    e.x > gestureArea.width - sideGestureAreaWidth ->
-                        Event.FastForward
-                    else ->
-                        Event.TogglePlayPause
-                })
-
-                return true
+            override fun onLongPress(e: MotionEvent) {
+                pushEvent(
+                    when {
+                        e.x < sideGestureAreaWidth ->
+                            Event.Rewind
+                        e.x > gestureArea.width - sideGestureAreaWidth ->
+                            Event.FastForward
+                        else ->
+                            Event.TogglePlayPause
+                    }
+                )
             }
         }
     )
