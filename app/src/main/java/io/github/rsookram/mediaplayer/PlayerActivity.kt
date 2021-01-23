@@ -68,7 +68,7 @@ class PlayerActivity : Activity() {
         }
 
         player.addListener(object : Player.EventListener {
-            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+            override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
                 view.setIsPlaying(playWhenReady)
             }
         })
