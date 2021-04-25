@@ -8,7 +8,6 @@ import com.google.android.exoplayer2.source.MergingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.util.Util
 
 fun createMediaSource(context: Context, playbackRequest: PlaybackRequest): MediaSource {
     val factory = createMediaSourceFactory(context, playbackRequest)
@@ -28,8 +27,7 @@ private fun createMediaSourceFactory(
     context: Context,
     playbackRequest: PlaybackRequest,
 ): MediaSourceFactory {
-    val appName = context.getString(R.string.app_name)
-    val userAgent = playbackRequest.headers["user-agent"] ?: Util.getUserAgent(context, appName)
+    val userAgent = playbackRequest.headers["user-agent"]
     val httpDataSourceFactory = DefaultHttpDataSource.Factory()
         .setUserAgent(userAgent)
         .setDefaultRequestProperties(playbackRequest.headers)
