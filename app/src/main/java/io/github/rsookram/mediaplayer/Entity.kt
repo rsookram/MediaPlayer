@@ -8,6 +8,7 @@ data class PlaybackRequest(
     val mimeType: String,
     val mediaType: MediaType,
     val headers: Map<String, String>,
+    val autoClose: Boolean,
 )
 
 enum class MediaType {

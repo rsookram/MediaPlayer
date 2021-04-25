@@ -18,7 +18,9 @@ class IntentParser {
         val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: bundleOf()
         val headers = parseHeaders(headersBundle)
 
-        return PlaybackRequest(uri, audioUri, mimeType, mediaType, headers)
+        val autoClose = intent.getBooleanExtra("intent.extra.autoclose", false)
+
+        return PlaybackRequest(uri, audioUri, mimeType, mediaType, headers, autoClose)
     }
 
     private fun determineMediaType(mimeType: String): MediaType =
