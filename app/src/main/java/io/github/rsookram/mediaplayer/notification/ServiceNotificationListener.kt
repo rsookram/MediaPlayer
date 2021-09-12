@@ -9,12 +9,16 @@ class ServiceNotificationListener(
     private val context: Context
 ) : PlayerNotificationManager.NotificationListener {
 
-    override fun onNotificationStarted(notificationId: Int, notification: Notification) {
+    override fun onNotificationPosted(
+        notificationId: Int,
+        notification: Notification,
+        ongoing: Boolean
+    ) {
         val intent = NotificationService.newIntent(context, notificationId, notification)
         ContextCompat.startForegroundService(context, intent)
     }
 
-    override fun onNotificationCancelled(notificationId: Int) {
+    override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
         context.stopService(NotificationService.newIntent(context))
     }
 }

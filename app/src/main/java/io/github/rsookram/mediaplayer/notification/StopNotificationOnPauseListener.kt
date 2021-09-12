@@ -9,7 +9,7 @@ private const val DELAY_BEFORE_STOP_MS = 60 * 1000L // 1 min
 
 class StopNotificationOnPauseListener(
     private val stopNotification: () -> Unit
-) : Player.EventListener {
+) : Player.Listener {
 
     private val handler = Handler(Looper.getMainLooper())
 

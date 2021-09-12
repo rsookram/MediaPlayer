@@ -38,7 +38,7 @@ class IntentParser {
 
         return headers
             .filter { (k, v) -> isValidHeader(k, v) }
-            .mapKeys { (k, _) -> k.toLowerCase(Locale.US) }
+            .mapKeys { (k, _) -> k.lowercase(Locale.US) }
     }
 
     private fun isValidHeader(name: String, value: String?): Boolean {

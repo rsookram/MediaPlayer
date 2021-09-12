@@ -67,7 +67,7 @@ class PlayerActivity : Activity() {
             }
         }
 
-        player.addListener(object : Player.EventListener {
+        player.addListener(object : Player.Listener {
             override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
                 view.setIsPlaying(playWhenReady)
             }
@@ -86,15 +86,11 @@ class PlayerActivity : Activity() {
         player.prepare()
         player.playWhenReady = true
 
-        notificationManager = PlayerNotificationManager.createWithNotificationChannel(
-            this,
-            "media",
-            R.string.channel_media_playback,
-            0,
-            NOTIFICATION_ID,
-            DescriptionAdapter(title),
-            ServiceNotificationListener(this@PlayerActivity)
-        )
+        notificationManager = PlayerNotificationManager.Builder(this, NOTIFICATION_ID, "media")
+            .setChannelNameResourceId(R.string.channel_media_playback)
+            .setMediaDescriptionAdapter(DescriptionAdapter(title))
+            .setNotificationListener(ServiceNotificationListener(this))
+            .build()
 
         player.addListener(StopNotificationOnPauseListener(stopNotification = {
             notificationManager.setPlayer(null)
