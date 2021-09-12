@@ -107,7 +107,7 @@ class PlayerActivity : Activity() {
 
     private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
         playbackSpeed += delta
-        player.setPlaybackParameters(PlaybackParameters(playbackSpeed))
+        player.playbackParameters = PlaybackParameters(playbackSpeed)
 
         view.setPlaybackSpeed(playbackSpeed)
     }
