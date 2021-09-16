@@ -9,10 +9,10 @@ apps.
 
 ## Controls
 
-The controls can be brought up by swiping up. Double-tapping in the middle of
+The controls can be brought up by swiping up. Long pressing in the middle of
 the screen toggles the play / pause state. For media types which support
-seeking, double-tapping on the left will rewind by 10 seconds, and
-double-tapping on the right will fast forward by 10 seconds.
+seeking, long pressing on the left will rewind by 10 seconds, and long pressing
+on the right will fast forward by 10 seconds.
 
 
 ## Permissions
