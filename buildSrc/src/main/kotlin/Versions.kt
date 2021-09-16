@@ -12,4 +12,5 @@ object Versions {
 
     const val exoplayerCore = "com.google.android.exoplayer:exoplayer-core:$exoplayer"
     const val exoplayerUi = "com.google.android.exoplayer:exoplayer-ui:$exoplayer"
+    const val exoplayerHls = "com.google.android.exoplayer:exoplayer-hls:$exoplayer"
 }
