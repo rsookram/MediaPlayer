@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewGroup
 import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import io.github.rsookram.mediaplayer.notification.DescriptionAdapter
@@ -20,14 +20,13 @@ private const val NOTIFICATION_ID = 1
 class PlayerActivity : Activity() {
 
     private val player by lazy {
-        SimpleExoPlayer.Builder(this)
+        ExoPlayer.Builder(this)
             .setTrackSelector(
                 DefaultTrackSelector(this).apply {
                     // For some reason the video track needs to be disabled to
                     // disable subs
                     parameters = buildUponParameters()
                         .setRendererDisabled(C.TRACK_TYPE_VIDEO, true)
-                        .clearSelectionOverrides()
                         .build()
                 }
             )
@@ -113,13 +112,13 @@ class PlayerActivity : Activity() {
     }
 
     private fun rewind() {
-        if (!player.isCurrentWindowSeekable) return
+        if (!player.isCurrentMediaItemSeekable) return
 
         player.seekTo((player.currentPosition - 10_000).coerceAtLeast(0))
     }
 
     private fun fastForward() {
-        if (!player.isCurrentWindowSeekable) return
+        if (!player.isCurrentMediaItemSeekable) return
 
         val durationMs = player.duration
         val desired = player.currentPosition + 10_000

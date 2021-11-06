@@ -6,24 +6,16 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.targetSdk)
+    compileSdk = Versions.targetSdk
 
     defaultConfig {
         applicationId = "io.github.rsookram.mediaplayer"
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.targetSdk)
+        minSdk = Versions.minSdk
+        targetSdk = Versions.targetSdk
         versionCode = 1
         versionName = "1.0"
 
         resConfigs("en")
-    }
-
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     buildFeatures {
