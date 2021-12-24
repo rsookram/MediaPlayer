@@ -49,6 +49,7 @@ android {
         exclude("/kotlin/**")
         exclude("META-INF/*.kotlin_module")
         exclude("META-INF/*.version")
+        exclude("kotlin-tooling-metadata.json")
     }
 }
 
