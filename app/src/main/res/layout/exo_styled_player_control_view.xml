@@ -36,20 +36,10 @@
             android:paddingTop="8dp"
             android:background="@color/bg_controls">
 
-            <FrameLayout
-                android:id="@+id/play_pause_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@id/exo_play"
-                    style="@style/ExoMediaButton.Play"/>
-
-                <ImageButton
-                    android:id="@id/exo_pause"
-                    style="@style/ExoMediaButton.Pause"
-                    tools:visibility="invisible"/>
-            </FrameLayout>
+            <!-- TODO: Replace with icons that aren't filled -->
+            <ImageButton
+                android:id="@id/exo_play_pause"
+                style="@style/ExoStyledControls.Button.Center.PlayPause"/>
 
             <TextView
                 android:id="@+id/title"
@@ -58,7 +48,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginHorizontal="4dp"
                 android:layout_toLeftOf="@id/decrease_speed"
-                android:layout_toRightOf="@id/play_pause_container"
+                android:layout_toRightOf="@id/exo_play_pause"
                 tools:text="a_video.mp4"
                 android:textColor="?android:textColorPrimary"
                 android:textStyle="bold"

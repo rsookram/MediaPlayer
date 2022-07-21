@@ -18,10 +18,6 @@ android {
         resConfigs("en")
     }
 
-    buildFeatures {
-        viewBinding = true
-    }
-
     signingConfigs {
         getByName("debug") {
             storeFile = file("debug.keystore")
