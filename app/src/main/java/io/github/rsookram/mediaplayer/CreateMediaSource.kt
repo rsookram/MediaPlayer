@@ -3,7 +3,6 @@ package io.github.rsookram.mediaplayer
 import android.content.Context
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.source.MergingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -29,7 +28,7 @@ fun createMediaSource(context: Context, playbackRequest: PlaybackRequest): Media
 private fun createMediaSourceFactory(
     context: Context,
     playbackRequest: PlaybackRequest,
-): MediaSourceFactory {
+): MediaSource.Factory {
     val userAgent = playbackRequest.headers["user-agent"]
     val httpDataSourceFactory = DefaultHttpDataSource.Factory()
         .setUserAgent(userAgent)

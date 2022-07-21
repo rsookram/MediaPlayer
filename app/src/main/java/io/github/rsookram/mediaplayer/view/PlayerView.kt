@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.ui.StyledPlayerView
 import io.github.rsookram.mediaplayer.Event
 import io.github.rsookram.mediaplayer.MediaType
 import io.github.rsookram.mediaplayer.R
@@ -35,7 +35,7 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
 
     init {
         playerView.player = player
-        playerView.setShowBuffering(PlayerView.SHOW_BUFFERING_ALWAYS)
+        playerView.setShowBuffering(StyledPlayerView.SHOW_BUFFERING_ALWAYS)
 
         root.decreaseSpeed.setOnClickListener { pushEvent(Event.DecreaseSpeed) }
         root.increaseSpeed.setOnClickListener { pushEvent(Event.IncreaseSpeed) }

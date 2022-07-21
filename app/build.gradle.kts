@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
         applicationId = "io.github.rsookram.mediaplayer"
         minSdk = 25
-        targetSdk = 31
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
 
@@ -58,9 +58,9 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.core:core-ktx:1.8.0")
 
-    val exoplayer = "2.16.1"
+    val exoplayer = "2.18.0"
     implementation("com.google.android.exoplayer:exoplayer-core:$exoplayer")
     implementation("com.google.android.exoplayer:exoplayer-ui:$exoplayer")
     implementation("com.google.android.exoplayer:exoplayer-hls:$exoplayer")

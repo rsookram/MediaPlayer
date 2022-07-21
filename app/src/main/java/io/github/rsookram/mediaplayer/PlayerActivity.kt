@@ -30,6 +30,7 @@ class PlayerActivity : Activity() {
                         .build()
                 }
             )
+            .setUsePlatformDiagnostics(false)
             .build()
     }
 
