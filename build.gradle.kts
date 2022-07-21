@@ -5,8 +5,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath(Versions.androidGradlePlugin)
-        classpath(Versions.kotlinGradlePlugin)
+        classpath("com.android.tools.build:gradle:7.0.4")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
     }
 }
 
