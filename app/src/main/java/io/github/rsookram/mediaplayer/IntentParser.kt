@@ -3,7 +3,6 @@ package io.github.rsookram.mediaplayer
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.core.os.bundleOf
 import java.util.*
 
 class IntentParser {
@@ -15,7 +14,7 @@ class IntentParser {
 
         val mediaType = determineMediaType(mimeType)
 
-        val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: bundleOf()
+        val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: Bundle.EMPTY
         val headers = parseHeaders(headersBundle)
 
         val autoClose = intent.getBooleanExtra("intent.extra.autoclose", false)

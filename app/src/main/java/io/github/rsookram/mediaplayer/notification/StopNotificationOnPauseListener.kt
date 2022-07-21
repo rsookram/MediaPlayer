@@ -2,7 +2,6 @@ package io.github.rsookram.mediaplayer.notification
 
 import android.os.Handler
 import android.os.Looper
-import androidx.core.os.postDelayed
 import com.google.android.exoplayer2.Player
 
 private const val DELAY_BEFORE_STOP_MS = 60 * 1000L // 1 min
@@ -20,8 +19,6 @@ class StopNotificationOnPauseListener(
             return
         }
 
-        handler.postDelayed(DELAY_BEFORE_STOP_MS) {
-            stopNotification()
-        }
+        handler.postDelayed({ stopNotification() }, DELAY_BEFORE_STOP_MS)
     }
 }

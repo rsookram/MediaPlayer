@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.doOnPreDraw
-import androidx.core.view.isGone
+import androidx.core.view.OneShotPreDrawListener
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import io.github.rsookram.mediaplayer.Event
@@ -54,7 +53,7 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
 
         if (controlsMode == ControlsMode.SCROLLABLE) {
             // Start with the controls hidden
-            controlsBar.doOnPreDraw {
+            OneShotPreDrawListener.add(controlsBar) {
                 controlsAnimator.setClosed()
             }
         }
@@ -80,7 +79,7 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
     }
 
     fun setIsPlaying(isPlaying: Boolean) {
-        playIndicator.isGone = isPlaying
+        playIndicator.visibility = if (isPlaying) View.GONE else View.VISIBLE
     }
 
     fun setPlaybackSpeed(speed: Float) {
