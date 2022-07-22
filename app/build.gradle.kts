@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -41,16 +39,16 @@ android {
         }
     }
 
+    lint {
+        checkReleaseBuilds = false
+    }
+
     packagingOptions {
         exclude("/kotlin/**")
         exclude("META-INF/*.kotlin_module")
         exclude("META-INF/*.version")
         exclude("kotlin-tooling-metadata.json")
     }
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.allWarningsAsErrors = true
 }
 
 dependencies {
