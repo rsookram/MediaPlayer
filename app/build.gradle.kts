@@ -52,8 +52,6 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core:1.8.0")
-
     val exoplayer = "2.18.0"
     implementation("com.google.android.exoplayer:exoplayer-core:$exoplayer")
     implementation("com.google.android.exoplayer:exoplayer-ui:$exoplayer")

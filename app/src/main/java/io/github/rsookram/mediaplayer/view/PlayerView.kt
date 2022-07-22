@@ -3,8 +3,8 @@ package io.github.rsookram.mediaplayer.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.TextView
-import androidx.core.view.OneShotPreDrawListener
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import io.github.rsookram.mediaplayer.Event
@@ -53,9 +53,15 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
 
         if (controlsMode == ControlsMode.SCROLLABLE) {
             // Start with the controls hidden
-            OneShotPreDrawListener.add(controlsBar) {
-                controlsAnimator.setClosed()
-            }
+            controlsBar.viewTreeObserver.addOnPreDrawListener(
+                object : ViewTreeObserver.OnPreDrawListener {
+                    override fun onPreDraw(): Boolean {
+                        controlsBar.viewTreeObserver.removeOnPreDrawListener(this)
+                        controlsAnimator.setClosed()
+                        return true
+                    }
+                }
+            )
         }
 
         gestureArea.setOnTouchListener(
