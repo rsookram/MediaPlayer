@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "io.github.rsookram.mediaplayer"
-        minSdk = 25
+        minSdk = 30
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
