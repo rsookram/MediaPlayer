@@ -23,6 +23,14 @@ android {
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        create("release") {
+            if (System.getenv("MEDIA_STORE_FILE") != null) {
+                storeFile = file(System.getenv("MEDIA_STORE_FILE"))
+                storePassword = System.getenv("MEDIA_STORE_PASSWORD")
+                keyAlias = System.getenv("MEDIA_KEY_ALIAS")
+                keyPassword = System.getenv("MEDIA_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
@@ -34,8 +42,7 @@ android {
             isMinifyEnabled = true
             proguardFiles("proguard-rules.pro")
 
-            // Just for testing release builds. Not actually distributed.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

@@ -28,6 +28,21 @@ The foreground service permission is used to keep the app at foreground priority
 so that it is less likely to be killed by the system when media is being played
 in the background.
 
+## Build
+
+Run the following command from the root of the repository to make a debug
+build:
+
+```shell
+./gradlew assembleDebug
+```
+
+Making a release build is similar, but requires environment variables to be set
+to indicate how to sign the APK:
+
+```shell
+MEDIA_STORE_FILE='...' MEDIA_STORE_PASSWORD='...' MEDIA_KEY_ALIAS='...' MEDIA_KEY_PASSWORD='...' ./gradlew assembleRelease
+```
 
 ## Dependencies
 
