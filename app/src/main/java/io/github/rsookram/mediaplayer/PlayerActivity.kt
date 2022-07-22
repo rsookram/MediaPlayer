@@ -50,12 +50,12 @@ class PlayerActivity : Activity() {
             return
         }
 
-        enableImmersiveMode(window.decorView)
-
         val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
 
         val container = findViewById<ViewGroup>(android.R.id.content)
         view = PlayerView(container, player, title, playbackRequest.mediaType)
+
+        enableImmersiveMode(window)
 
         view.onEvent = { event ->
             when (event) {
@@ -187,7 +187,7 @@ class PlayerActivity : Activity() {
         super.onWindowFocusChanged(hasFocus)
 
         if (hasFocus) {
-            enableImmersiveMode(window.decorView)
+            enableImmersiveMode(window)
         }
     }
 }
