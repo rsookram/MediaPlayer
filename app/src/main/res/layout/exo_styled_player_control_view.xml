@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:paddingTop="8dp"
-            android:background="@color/bg_controls">
+            android:background="#AA212121">
 
             <!-- TODO: Replace with icons that aren't filled -->
             <ImageButton
