@@ -12,18 +12,13 @@ class IntentParser {
         val audioUri = intent.getParcelableExtra<Uri>("intent.extra.uri.audio")
         val mimeType = intent.type ?: return null
 
-        val mediaType = determineMediaType(mimeType)
-
         val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: Bundle.EMPTY
         val headers = parseHeaders(headersBundle)
 
         val autoClose = intent.getBooleanExtra("intent.extra.autoclose", false)
 
-        return PlaybackRequest(uri, audioUri, mimeType, mediaType, headers, autoClose)
+        return PlaybackRequest(uri, audioUri, mimeType, headers, autoClose)
     }
-
-    private fun determineMediaType(mimeType: String): MediaType =
-        if (mimeType.startsWith("audio/")) MediaType.AUDIO else MediaType.VIDEO
 
     private fun parseHeaders(bundle: Bundle): Map<String, String> {
         val headers = mutableMapOf<String, String>()

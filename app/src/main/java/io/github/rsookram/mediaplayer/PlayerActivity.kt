@@ -9,13 +9,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import io.github.rsookram.mediaplayer.notification.DescriptionAdapter
-import io.github.rsookram.mediaplayer.notification.ServiceNotificationListener
-import io.github.rsookram.mediaplayer.notification.StopNotificationOnPauseListener
 import io.github.rsookram.mediaplayer.view.PlayerView
-
-private const val NOTIFICATION_ID = 1
 
 class PlayerActivity : Activity() {
 
@@ -36,8 +30,6 @@ class PlayerActivity : Activity() {
 
     private lateinit var view: PlayerView
 
-    private lateinit var notificationManager: PlayerNotificationManager
-
     private var playbackSpeed = 1.0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +45,7 @@ class PlayerActivity : Activity() {
         val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
 
         val container = findViewById<ViewGroup>(android.R.id.content)
-        view = PlayerView(container, player, title, playbackRequest.mediaType)
+        view = PlayerView(container, player, title)
 
         enableImmersiveMode(window)
 
@@ -85,16 +77,6 @@ class PlayerActivity : Activity() {
         player.setMediaSource(mediaSource)
         player.prepare()
         player.playWhenReady = true
-
-        notificationManager = PlayerNotificationManager.Builder(this, NOTIFICATION_ID, "media")
-            .setChannelNameResourceId(R.string.channel_media_playback)
-            .setMediaDescriptionAdapter(DescriptionAdapter(title))
-            .setNotificationListener(ServiceNotificationListener(this))
-            .build()
-
-        player.addListener(StopNotificationOnPauseListener(stopNotification = {
-            notificationManager.setPlayer(null)
-        }))
     }
 
     private fun decreaseSpeed(view: PlayerView) {
@@ -132,25 +114,8 @@ class PlayerActivity : Activity() {
         player.playWhenReady = !player.playWhenReady
     }
 
-    override fun onStart() {
-        super.onStart()
-        notificationManager.setPlayer(null)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        // If the player is set when finishing, it will get unset shortly after
-        // in onDestroy. This causes Context.stopService to be called before
-        // Service.startForeground, which will crash the app.
-        if (!isFinishing) {
-            notificationManager.setPlayer(player)
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        notificationManager.setPlayer(null)
         player.release()
     }
 

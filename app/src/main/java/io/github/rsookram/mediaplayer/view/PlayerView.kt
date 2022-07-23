@@ -8,10 +8,9 @@ import android.widget.TextView
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import io.github.rsookram.mediaplayer.Event
-import io.github.rsookram.mediaplayer.MediaType
 import io.github.rsookram.mediaplayer.R
 
-class PlayerView(container: ViewGroup, player: Player, title: String, mediaType: MediaType) {
+class PlayerView(container: ViewGroup, player: Player, title: String) {
 
     var onEvent: (Event) -> Unit = {}
 
@@ -22,11 +21,6 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
         container,
         true
     ).findViewById(R.id.player_view) as StyledPlayerView
-
-    private val controlsMode = when (mediaType) {
-        MediaType.AUDIO -> ControlsMode.ALWAYS_SHOW
-        MediaType.VIDEO -> ControlsMode.SCROLLABLE
-    }
 
     private val gestureArea = playerView.findViewById<View>(R.id.gesture_area)
 
@@ -51,25 +45,22 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
 
         playerView.showController()
 
-        if (controlsMode == ControlsMode.SCROLLABLE) {
-            // Start with the controls hidden
-            controlsBar.viewTreeObserver.addOnPreDrawListener(
-                object : ViewTreeObserver.OnPreDrawListener {
-                    override fun onPreDraw(): Boolean {
-                        controlsBar.viewTreeObserver.removeOnPreDrawListener(this)
-                        controlsAnimator.setClosed()
-                        return true
-                    }
+        // Start with the controls hidden
+        controlsBar.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    controlsBar.viewTreeObserver.removeOnPreDrawListener(this)
+                    controlsAnimator.setClosed()
+                    return true
                 }
-            )
-        }
+            }
+        )
 
         gestureArea.setOnTouchListener(
             PlayerGestureTouchListener(
                 gestureArea,
                 controlsAnimator,
-                isScrollEnabled = controlsMode == ControlsMode.SCROLLABLE,
-                pushEvent = ::pushEvent
+                ::pushEvent,
             )
         )
 
@@ -96,12 +87,6 @@ class PlayerView(container: ViewGroup, player: Player, title: String, mediaType:
     }
 
     fun toggleControls() {
-        if (controlsMode == ControlsMode.ALWAYS_SHOW) return
-
         controlsAnimator.toggleDisplay()
     }
-}
-
-private enum class ControlsMode {
-    SCROLLABLE, ALWAYS_SHOW,
 }

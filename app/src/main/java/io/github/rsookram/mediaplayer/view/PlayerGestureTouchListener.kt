@@ -9,7 +9,6 @@ import io.github.rsookram.mediaplayer.R
 class PlayerGestureTouchListener(
     private val gestureArea: View,
     private val controlsAnimator: ControlsAnimator,
-    private val isScrollEnabled: Boolean,
     private val pushEvent: (Event) -> Unit,
 ) : View.OnTouchListener {
 
@@ -30,10 +29,8 @@ class PlayerGestureTouchListener(
                 distanceX: Float,
                 distanceY: Float
             ): Boolean {
-                if (isScrollEnabled) {
-                    controlsAnimator.handleScroll(distanceY)
-                }
-                return isScrollEnabled
+                controlsAnimator.handleScroll(distanceY)
+                return true
             }
 
             override fun onLongPress(e: MotionEvent) {

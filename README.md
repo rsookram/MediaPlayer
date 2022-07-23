@@ -22,11 +22,6 @@ on the right will fast forward by 10 seconds.
 The internet permission is required to support media streams over http and
 https.
 
-### Foreground Service
-
-The foreground service permission is used to keep the app at foreground priority
-so that it is less likely to be killed by the system when media is being played
-in the background.
 
 ## Build
 
