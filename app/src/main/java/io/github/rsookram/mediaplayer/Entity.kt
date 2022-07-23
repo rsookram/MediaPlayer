@@ -7,5 +7,4 @@ data class PlaybackRequest(
     val audioUri: Uri?,
     val mimeType: String,
     val headers: Map<String, String>,
-    val autoClose: Boolean,
 )

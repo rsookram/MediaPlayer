@@ -63,13 +63,6 @@ class PlayerActivity : Activity() {
             override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
                 view.setIsPlaying(playWhenReady)
             }
-
-            override fun onPlaybackStateChanged(state: Int) {
-                if (state == Player.STATE_ENDED && playbackRequest.autoClose) {
-                    setResult(RESULT_OK)
-                    finish()
-                }
-            }
         })
 
         val mediaSource = createMediaSource(this, playbackRequest)

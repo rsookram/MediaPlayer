@@ -15,9 +15,7 @@ class IntentParser {
         val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: Bundle.EMPTY
         val headers = parseHeaders(headersBundle)
 
-        val autoClose = intent.getBooleanExtra("intent.extra.autoclose", false)
-
-        return PlaybackRequest(uri, audioUri, mimeType, headers, autoClose)
+        return PlaybackRequest(uri, audioUri, mimeType, headers)
     }
 
     private fun parseHeaders(bundle: Bundle): Map<String, String> {
