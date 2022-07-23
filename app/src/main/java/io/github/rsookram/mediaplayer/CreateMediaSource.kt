@@ -5,11 +5,8 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.MergingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-
-private const val HLS_MIME_TYPE = "application/vnd.apple.mpegurl"
 
 fun createMediaSource(context: Context, playbackRequest: PlaybackRequest): MediaSource {
     val factory = createMediaSourceFactory(context, playbackRequest)
@@ -35,9 +32,5 @@ private fun createMediaSourceFactory(
         .setDefaultRequestProperties(playbackRequest.headers)
     val dataSourceFactory = DefaultDataSource.Factory(context, httpDataSourceFactory)
 
-    return if (playbackRequest.mimeType == HLS_MIME_TYPE) {
-        HlsMediaSource.Factory(dataSourceFactory)
-    } else {
-        ProgressiveMediaSource.Factory(dataSourceFactory)
-    }
+    return ProgressiveMediaSource.Factory(dataSourceFactory)
 }

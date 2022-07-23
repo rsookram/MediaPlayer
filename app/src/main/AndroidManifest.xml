@@ -35,18 +35,6 @@
                 <data android:mimeType="video/mpeg" />
                 <data android:mimeType="audio/mpeg" />
             </intent-filter>
-
-            <!-- HLS support -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:mimeType="application/vnd.apple.mpegurl" />
-            </intent-filter>
         </activity>
     </application>
 

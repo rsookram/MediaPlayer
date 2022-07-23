@@ -1,7 +1,7 @@
 # MediaPlayer
 
 A simple media player app for Android. Refer to the
-[manifest](https://github.com/rsookram/MediaPlayer/blob/master/app/src/main/AndroidManifest.xml#L22-L51)
+[manifest](https://github.com/rsookram/MediaPlayer/blob/master/app/src/main/AndroidManifest.xml#L20-L37)
 for a list of supported formats. MediaPlayer doesn't have an intent filter for
 launchers, so it won't appear in your launcher app. It gets launched by other
 apps.
