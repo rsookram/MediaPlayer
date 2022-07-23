@@ -5,7 +5,8 @@
     android:id="@+id/player_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:defaultFocusHighlightEnabled="false"
     android:keepScreenOn="true"
-    app:show_timeout="0"
+    app:auto_show="false"
     app:hide_on_touch="false"
-    app:auto_show="false"/>
+    app:show_timeout="0" />
