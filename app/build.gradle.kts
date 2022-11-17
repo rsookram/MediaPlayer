@@ -4,12 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    namespace = "io.github.rsookram.mediaplayer"
+
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "io.github.rsookram.mediaplayer"
         minSdk = 30
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -59,7 +61,7 @@ android {
 }
 
 dependencies {
-    val exoplayer = "2.18.0"
+    val exoplayer = "2.18.1"
     implementation("com.google.android.exoplayer:exoplayer-core:$exoplayer")
     implementation("com.google.android.exoplayer:exoplayer-ui:$exoplayer")
 }
