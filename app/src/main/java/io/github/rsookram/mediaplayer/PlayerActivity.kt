@@ -1,6 +1,7 @@
 package io.github.rsookram.mediaplayer
 
 import android.app.Activity
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewGroup
@@ -49,6 +50,8 @@ class PlayerActivity : Activity() {
 
         enableImmersiveMode(window)
 
+        setPlaybackSpeed(view, loadSpeed())
+
         view.onEvent = { event ->
             when (event) {
                 Event.DecreaseSpeed -> decreaseSpeed(view)
@@ -73,19 +76,28 @@ class PlayerActivity : Activity() {
     }
 
     private fun decreaseSpeed(view: PlayerView) {
-        adjustPlaybackSpeed(view, -0.1F)
+        setPlaybackSpeed(view, playbackSpeed - 0.1F)
     }
 
     private fun increaseSpeed(view: PlayerView) {
-        adjustPlaybackSpeed(view, +0.1F)
+        setPlaybackSpeed(view, playbackSpeed + 0.1F)
     }
 
-    private fun adjustPlaybackSpeed(view: PlayerView, delta: Float) {
-        playbackSpeed += delta
+    private fun setPlaybackSpeed(view: PlayerView, speed: Float) {
+        playbackSpeed = speed
         player.playbackParameters = PlaybackParameters(playbackSpeed)
 
         view.setPlaybackSpeed(playbackSpeed)
+        saveSpeed(speed)
     }
+
+    private fun loadSpeed(): Float = prefs().getFloat("speed", 1.0f)
+
+    private fun saveSpeed(speed: Float) {
+        prefs().edit().putFloat("speed", speed).apply()
+    }
+
+    private fun prefs(): SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
 
     private fun rewind() {
         if (!player.isCurrentMediaItemSeekable) return
