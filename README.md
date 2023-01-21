@@ -36,7 +36,7 @@ Making a release build is similar, but requires environment variables to be set
 to indicate how to sign the APK:
 
 ```shell
-MEDIA_STORE_FILE='...' MEDIA_STORE_PASSWORD='...' MEDIA_KEY_ALIAS='...' MEDIA_KEY_PASSWORD='...' ./gradlew assembleRelease
+STORE_FILE='...' STORE_PASSWORD='...' KEY_ALIAS='...' KEY_PASSWORD='...' ./gradlew assembleRelease
 ```
 
 ## Dependencies

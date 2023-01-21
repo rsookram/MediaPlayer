@@ -26,11 +26,11 @@ android {
             keyPassword = "android"
         }
         create("release") {
-            if (System.getenv("MEDIA_STORE_FILE") != null) {
-                storeFile = file(System.getenv("MEDIA_STORE_FILE"))
-                storePassword = System.getenv("MEDIA_STORE_PASSWORD")
-                keyAlias = System.getenv("MEDIA_KEY_ALIAS")
-                keyPassword = System.getenv("MEDIA_KEY_PASSWORD")
+            if (System.getenv("STORE_FILE") != null) {
+                storeFile = file(System.getenv("STORE_FILE"))
+                storePassword = System.getenv("STORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
             }
         }
     }
