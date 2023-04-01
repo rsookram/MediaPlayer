@@ -42,7 +42,7 @@ STORE_FILE='...' STORE_PASSWORD='...' KEY_ALIAS='...' KEY_PASSWORD='...' ./gradl
 ## Dependencies
 
 This app is written in Kotlin and uses
-[ExoPlayer](https://github.com/google/ExoPlayer) to handle media playback.
+[Media3](https://github.com/androidx/media) to handle media playback.
 
 
 License

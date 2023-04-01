@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.TextView
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.StyledPlayerView
+import androidx.media3.common.Player
+import androidx.media3.ui.PlayerView
 import io.github.rsookram.mediaplayer.Event
 import io.github.rsookram.mediaplayer.R
 
@@ -20,7 +20,7 @@ class PlayerView(container: ViewGroup, player: Player, title: String) {
         R.layout.view_player,
         container,
         true
-    ).findViewById(R.id.player_view) as StyledPlayerView
+    ).findViewById(R.id.player_view) as PlayerView
 
     private val gestureArea = playerView.findViewById<View>(R.id.gesture_area)
 
@@ -38,7 +38,7 @@ class PlayerView(container: ViewGroup, player: Player, title: String) {
 
     init {
         playerView.player = player
-        playerView.setShowBuffering(StyledPlayerView.SHOW_BUFFERING_ALWAYS)
+        playerView.setShowBuffering(PlayerView.SHOW_BUFFERING_ALWAYS)
 
         decreaseSpeed.setOnClickListener { pushEvent(Event.DecreaseSpeed) }
         increaseSpeed.setOnClickListener { pushEvent(Event.IncreaseSpeed) }

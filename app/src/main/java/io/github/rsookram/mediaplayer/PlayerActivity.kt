@@ -5,11 +5,11 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewGroup
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.PlaybackParameters
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import androidx.media3.common.C
+import androidx.media3.common.PlaybackParameters
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import io.github.rsookram.mediaplayer.view.PlayerView
 
 class PlayerActivity : Activity() {

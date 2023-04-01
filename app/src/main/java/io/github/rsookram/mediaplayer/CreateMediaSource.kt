@@ -1,12 +1,12 @@
 package io.github.rsookram.mediaplayer
 
 import android.content.Context
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.MergingMediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSource
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import androidx.media3.common.MediaItem
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.exoplayer.source.MergingMediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 
 fun createMediaSource(context: Context, playbackRequest: PlaybackRequest): MediaSource {
     val factory = createMediaSourceFactory(context, playbackRequest)

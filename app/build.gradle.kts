@@ -66,7 +66,7 @@ android {
 }
 
 dependencies {
-    val exoplayer = "2.18.5"
-    implementation("com.google.android.exoplayer:exoplayer-core:$exoplayer")
-    implementation("com.google.android.exoplayer:exoplayer-ui:$exoplayer")
+    val media = "1.0.0"
+    implementation("androidx.media3:media3-exoplayer:$media")
+    implementation("androidx.media3:media3-ui:$media")
 }
