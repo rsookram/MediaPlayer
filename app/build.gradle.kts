@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -58,10 +58,15 @@ android {
         exclude("META-INF/*.version")
         exclude("kotlin-tooling-metadata.json")
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 }
 
 dependencies {
-    val exoplayer = "2.18.2"
+    val exoplayer = "2.18.5"
     implementation("com.google.android.exoplayer:exoplayer-core:$exoplayer")
     implementation("com.google.android.exoplayer:exoplayer-ui:$exoplayer")
 }
