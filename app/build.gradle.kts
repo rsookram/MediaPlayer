@@ -6,16 +6,16 @@ plugins {
 android {
     namespace = "io.github.rsookram.mediaplayer"
 
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "io.github.rsookram.mediaplayer"
-        minSdk = 30
-        targetSdk = 33
+        minSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
-        resConfigs("en", "anydpi")
+        resourceConfigurations += listOf("en", "anydpi")
     }
 
     signingConfigs {
@@ -52,21 +52,25 @@ android {
         checkReleaseBuilds = false
     }
 
-    packagingOptions {
-        exclude("/kotlin/**")
-        exclude("META-INF/*.kotlin_module")
-        exclude("META-INF/*.version")
-        exclude("kotlin-tooling-metadata.json")
-    }
+    packaging.resources.excludes += listOf(
+        "/kotlin/**",
+        "META-INF/*.kotlin_module",
+        "META-INF/*.version",
+        "kotlin-tooling-metadata.json",
+    )
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
 }
 
 dependencies {
-    val media = "1.0.0"
+    val media = "1.2.1"
     implementation("androidx.media3:media3-exoplayer:$media")
     implementation("androidx.media3:media3-ui:$media")
 }

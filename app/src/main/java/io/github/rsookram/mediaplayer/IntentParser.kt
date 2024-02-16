@@ -9,7 +9,7 @@ class IntentParser {
 
     fun parse(intent: Intent): PlaybackRequest? {
         val uri = intent.data ?: return null
-        val audioUri = intent.getParcelableExtra<Uri>("intent.extra.uri.audio")
+        val audioUri = intent.getParcelableExtra("intent.extra.uri.audio", Uri::class.java)
         val mimeType = intent.type ?: return null
 
         val headersBundle = intent.getBundleExtra("intent.extra.headers") ?: Bundle.EMPTY
