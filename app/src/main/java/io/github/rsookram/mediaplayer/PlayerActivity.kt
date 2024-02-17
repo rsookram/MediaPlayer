@@ -36,14 +36,13 @@ class PlayerActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val parser = IntentParser()
-        val playbackRequest = parser.parse(intent)
-        if (playbackRequest == null) {
+        val uri = intent.data
+        if (uri == null) {
             finish()
             return
         }
 
-        val title = playbackRequest.uri.lastPathSegment ?: playbackRequest.uri.toString()
+        val title = uri.lastPathSegment ?: uri.toString()
 
         val container = findViewById<ViewGroup>(android.R.id.content)
         view = PlayerView(container, player, title)
@@ -68,7 +67,7 @@ class PlayerActivity : Activity() {
             }
         })
 
-        val mediaSource = createMediaSource(this, playbackRequest)
+        val mediaSource = createMediaSource(this, uri)
 
         player.setMediaSource(mediaSource)
         player.prepare()

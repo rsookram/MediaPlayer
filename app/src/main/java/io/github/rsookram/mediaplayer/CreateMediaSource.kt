@@ -1,36 +1,22 @@
 package io.github.rsookram.mediaplayer
 
 import android.content.Context
+import android.net.Uri
 import androidx.media3.common.MediaItem
 import androidx.media3.datasource.DefaultDataSource
-import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.source.MediaSource
-import androidx.media3.exoplayer.source.MergingMediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 
-fun createMediaSource(context: Context, playbackRequest: PlaybackRequest): MediaSource {
-    val factory = createMediaSourceFactory(context, playbackRequest)
+fun createMediaSource(context: Context, uri: Uri): MediaSource {
+    val factory = createMediaSourceFactory(context)
 
-    val videoMediaSource = factory.createMediaSource(MediaItem.fromUri(playbackRequest.uri))
-    if (playbackRequest.audioUri == null) {
-        return videoMediaSource
-    }
-
-    return MergingMediaSource(
-        videoMediaSource,
-        factory.createMediaSource(MediaItem.fromUri(playbackRequest.audioUri))
-    )
+    return factory.createMediaSource(MediaItem.fromUri(uri))
 }
 
 private fun createMediaSourceFactory(
     context: Context,
-    playbackRequest: PlaybackRequest,
 ): MediaSource.Factory {
-    val userAgent = playbackRequest.headers["user-agent"]
-    val httpDataSourceFactory = DefaultHttpDataSource.Factory()
-        .setUserAgent(userAgent)
-        .setDefaultRequestProperties(playbackRequest.headers)
-    val dataSourceFactory = DefaultDataSource.Factory(context, httpDataSourceFactory)
+    val dataSourceFactory = DefaultDataSource.Factory(context)
 
     return ProgressiveMediaSource.Factory(dataSourceFactory)
 }

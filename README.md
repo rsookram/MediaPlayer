@@ -15,14 +15,6 @@ seeking, long pressing on the left will rewind by 10 seconds, and long pressing
 on the right will fast forward by 10 seconds.
 
 
-## Permissions
-
-### Internet
-
-The internet permission is required to support media streams over http and
-https.
-
-
 ## Build
 
 Run the following command from the root of the repository to make a debug
