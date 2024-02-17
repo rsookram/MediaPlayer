@@ -76,11 +76,11 @@ class PlayerActivity : Activity() {
     }
 
     private fun decreaseSpeed(view: PlayerView) {
-        setPlaybackSpeed(view, playbackSpeed - 0.1F)
+        setPlaybackSpeed(view, playbackSpeed - 0.25F)
     }
 
     private fun increaseSpeed(view: PlayerView) {
-        setPlaybackSpeed(view, playbackSpeed + 0.1F)
+        setPlaybackSpeed(view, playbackSpeed + 0.25F)
     }
 
     private fun setPlaybackSpeed(view: PlayerView, speed: Float) {
