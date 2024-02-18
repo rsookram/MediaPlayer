@@ -33,8 +33,8 @@ STORE_FILE='...' STORE_PASSWORD='...' KEY_ALIAS='...' KEY_PASSWORD='...' ./gradl
 
 ## Dependencies
 
-This app is written in Kotlin and uses
-[Media3](https://github.com/androidx/media) to handle media playback.
+This app uses [Media3](https://github.com/androidx/media) to handle media
+playback.
 
 
 License

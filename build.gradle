@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.application' version '8.2.2' apply true
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+android {
+    namespace 'io.github.rsookram.mediaplayer'
+
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "io.github.rsookram.mediaplayer"
+        minSdk 33
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        resourceConfigurations += ["en", "anydpi"]
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+        release {
+            if (System.getenv("STORE_FILE") != null) {
+                storeFile file(System.getenv("STORE_FILE"))
+                storePassword System.getenv("STORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lint {
+        checkReleaseBuilds = false
+    }
+
+    packaging.resources.excludes += [
+            "/kotlin/**",
+            "META-INF/*.kotlin_module",
+            "META-INF/*.version",
+            "kotlin-tooling-metadata.json",
+    ]
+}
+
+dependencies {
+    def media = "1.2.1"
+    implementation "androidx.media3:media3-exoplayer:$media"
+    implementation "androidx.media3:media3-ui:$media"
+}
