@@ -58,9 +58,7 @@ android {
 
     packaging.resources.excludes += [
             "/kotlin/**",
-            "META-INF/*.kotlin_module",
             "META-INF/*.version",
-            "kotlin-tooling-metadata.json",
     ]
 }
 
