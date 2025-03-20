@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application' version '8.7.0' apply true
+    id 'com.android.application' version '8.9.0' apply true
 }
 
 repositories {
@@ -63,7 +63,7 @@ android {
 }
 
 dependencies {
-    def media = "1.4.1"
+    def media = "1.5.1"
     implementation "androidx.media3:media3-exoplayer:$media"
     implementation "androidx.media3:media3-ui:$media"
 }
