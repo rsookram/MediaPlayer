@@ -17,6 +17,8 @@ import androidx.media3.datasource.DefaultDataSource;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.exoplayer.source.ProgressiveMediaSource;
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector;
+import androidx.media3.extractor.DefaultExtractorsFactory;
+import androidx.media3.extractor.text.SubtitleParser;
 
 import io.github.rsookram.mediaplayer.view.PlayerView;
 
@@ -88,7 +90,11 @@ public class PlayerActivity extends Activity {
         });
 
         DefaultDataSource.Factory dataSourceFactory = new DefaultDataSource.Factory(this);
-        ProgressiveMediaSource.Factory factory = new ProgressiveMediaSource.Factory(dataSourceFactory);
+        ProgressiveMediaSource.Factory factory = new ProgressiveMediaSource.Factory(
+                dataSourceFactory,
+                // Disable parsing of subtitles
+                new DefaultExtractorsFactory().setSubtitleParserFactory(SubtitleParser.Factory.UNSUPPORTED)
+        );
 
         ProgressiveMediaSource mediaSource = factory.createMediaSource(MediaItem.fromUri(uri));
 
